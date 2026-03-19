@@ -1,0 +1,13 @@
+@use '../abstracts' as *;
+
+.button{
+    border: none;
+    border-radius: 2px;
+    cursor: pointer;
+}
+
+.button:disabled{
+        background: $dark-gray;
+        color: white;
+        cursor: not-allowed;
+}
