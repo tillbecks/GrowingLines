@@ -172,16 +172,55 @@ function setEditMode(){
         growButton.disabled = false;
         resetGrowButton.disabled = false;
     }
+    updateStyleModeButtons();
 }
 
 function setStartPointModus(){
-    joinPointMode = startPointMode;
-    startPointMode = !startPointMode;
+    if(!startPointMode){
+        if(joinPointMode){
+            joinPointMode = false;
+        }
+        startPointMode = true;
+    }
+    else{
+        startPointMode = false;
+    }
+
+    updateStyleModeButtons();
 }
 
+
+
 function setJoinPointModus(){
-    startPointMode = joinPointMode;
-    joinPointMode = !joinPointMode;
+    if(!joinPointMode){
+        if(startPointMode){
+            startPointMode = false;
+        }
+        joinPointMode = true;
+    }
+    else{
+        joinPointMode = false;
+    }
+    
+    updateStyleModeButtons();
+}
+
+function updateStyleModeButtons(){
+    if(joinPointMode){
+        joinPointButton.style.color = "white";
+        joinPointButton.style.backgroundColor = "blue";
+    }else{
+        joinPointButton.style.color = "blue";
+        joinPointButton.style.backgroundColor = "white";
+    }
+
+    if(startPointMode){
+        startPointButton.style.color = "white";
+        startPointButton.style.backgroundColor = "red";
+    }else{
+        startPointButton.style.color = "red";
+        startPointButton.style.backgroundColor = "white";
+    }
 }
 
 function calculateJoinPoints(){
