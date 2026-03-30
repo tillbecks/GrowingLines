@@ -9,7 +9,7 @@ export async function abordGrowing(state){
 }
 
 export async function growStructs(state, debug){
-    state.dom.stopGrowButton.disabled = false;
+    state.dom.buttons.stopGrow.disabled = false;
     let oneStillGrowing = true;
     state.growState.play = true;
     state.growState.isGrowing = true;
@@ -18,7 +18,7 @@ export async function growStructs(state, debug){
         oneStillGrowing = false;
         const structs = state.strokeState.structs;
 
-        canvasDrawing.redrawStrokes(state.dom.canvas.trace, state.dom.context);
+        canvasDrawing.redrawStrokes(state.dom.canvas.trace, state.dom.canvasContext);
 
         
         // Calculate forcefields for all nodes
@@ -31,18 +31,18 @@ export async function growStructs(state, debug){
             for(let points of forceFields){
                 for(let point of points){
                     //Mal einen Kreis in Rot der Durchlässig ist und mit dem Radius von TREE_CONFIG.crowdingMinDist um die Kraftpunkte
-                    state.dom.context.beginPath();
-                    state.dom.context.arc(point[0], point[1], state.treeConfig.crowdingMinDist, 0, 2 * Math.PI);
-                    state.dom.context.fillStyle = "rgba(255, 0, 0, 0.5)";
-                    state.dom.context.fill();
+                    state.dom.canvasContext.beginPath();
+                    state.dom.canvasContext.arc(point[0], point[1], state.treeConfig.crowdingMinDist, 0, 2 * Math.PI);
+                    state.dom.canvasContext.fillStyle = "rgba(255, 0, 0, 0.5)";
+                    state.dom.canvasContext.fill();
                 }
             }
 
             for(let node of structs){
-                state.dom.context.beginPath();
-                state.dom.context.arc(node.centerOfMass[0], node.centerOfMass[1], 15, 0, 2 * Math.PI);
-                state.dom.context.fillStyle = "rgba(0, 255, 0, 0.5)";
-                state.dom.context.fill();
+                state.dom.canvasContext.beginPath();
+                state.dom.canvasContext.arc(node.centerOfMass[0], node.centerOfMass[1], 15, 0, 2 * Math.PI);
+                state.dom.canvasContext.fillStyle = "rgba(0, 255, 0, 0.5)";
+                state.dom.canvasContext.fill();
             }
         }
         
@@ -54,7 +54,7 @@ export async function growStructs(state, debug){
                 }               
             }
             oneStillGrowing = structs[i].grow(otherForceFields) || oneStillGrowing;
-            structs[i].draw(state.dom.context);
+            structs[i].draw(state.dom.canvasContext);
         }
 
         await nextFrame(state);
@@ -65,7 +65,7 @@ export async function growStructs(state, debug){
     state.growState.abordGrow = false;
     state.growState.play = false;
     state.growState.isGrowing = false;
-    state.dom.stopGrowButton.disabled = true;
+    state.dom.buttons.stopGrow.disabled = true;
 
 
     state.dom.canvasContext.strokeStyle="black";

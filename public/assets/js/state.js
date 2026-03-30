@@ -45,14 +45,14 @@ export default class State{
                 resetGrow: document.getElementById("resetGrow"),
                 stopGrow: document.getElementById("stopGrow"),
                 editMode: document.getElementById("editModeButton"),
-                startPointMode: document.getElementById("startPointButton"),
-                joinPointMode: document.getElementById("joinPointButton"),
+                startPoint: document.getElementById("startPointButton"),
+                joinPoint: document.getElementById("joinPointButton"),
                 download: document.getElementById("downloadButton")
             }
         };
     }
 
-    setEditMode(mode){
+    setEditMode(mode=!this.editModeState.editMode){
         if(mode){
             this.editModeState.editMode = true;
         }

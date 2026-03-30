@@ -1,5 +1,5 @@
-export function drawStructs(strokes, structs, context){
-    redrawStrokes(strokes, context);
+export function drawStructs(trace, structs, context){
+    redrawStrokes(trace, context);
     for(let node of structs){
         node.draw(context);
     }

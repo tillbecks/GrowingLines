@@ -53,9 +53,9 @@ export function fillInDistantStrokePoints(stroke, dist){
     return stroke;
 }
 
-export function strokePreprocessing(strokes, strokeLength){
-    strokes = strokes.map(stroke => transformStrokeToTuples(stroke));
-    return strokes.map(stroke => fillInDistantStrokePoints(stroke, strokeLength)); 
+export function strokePreprocessing(trace, strokeLength){
+    trace = trace.map(stroke => transformStrokeToTuples(stroke));
+    return trace.map(stroke => fillInDistantStrokePoints(stroke, strokeLength)); 
 }
 
 export function calcCOMFromPoints(points){

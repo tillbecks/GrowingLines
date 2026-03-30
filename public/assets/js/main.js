@@ -20,8 +20,8 @@ state.dom.buttons.growButton.addEventListener("click", ()=>{enqueueAction(grow);
 state.dom.buttons.resetGrow.addEventListener("click", ()=>{enqueueAction(growReset);});
 state.dom.buttons.stopGrow.addEventListener("click", ()=>{state.setPlay();});
 state.dom.buttons.editMode.addEventListener("click", ()=>{editMode.setEditMode(state);});
-state.dom.buttons.startPointMode.addEventListener("click", ()=>{editMode.setStartPointModus(state);});
-state.dom.buttons.joinPointMode.addEventListener("click", ()=>{editMode.setJoinPointModus(state);});
+state.dom.buttons.startPoint.addEventListener("click", ()=>{state.setStartPointModus();});
+state.dom.buttons.joinPoint.addEventListener("click", ()=>{state.setJoinPointModus();});
 state.dom.buttons.download.addEventListener("click", downloadCanvasAsImage);
 
 document.onmousemove = handleMouseMove;
@@ -29,7 +29,7 @@ document.onmousedown = handleMouseDown;
 
 function handleMouseDown(event){
     if(state.editModeState.editMode){
-        editMode.handleMouseDown(state, event);
+        editMode.handleMouseDown(event, state);
     }
 }
 
@@ -47,7 +47,7 @@ async function totalReset(){
 
 async function growReset(){
     await GROWING.abordGrowing(state);
-    canvasDrawing.redrawStrokes(state.dom.canvas.trace, state.dom.context);
+    canvasDrawing.redrawStrokes(state.dom.canvas.trace, state.dom.canvasContext);
     state.reset("grow");
 }
 
@@ -55,11 +55,11 @@ async function grow(){
     await GROWING.abordGrowing(state);
 
     if(state.dom.canvas.hasChanged){
-        state.strokeState.strokes = UTILS.strokePreprocessing(state.dom.canvas.getTrace(), TREE.TREE_CONFIG.sproutingLength);
+        state.strokeState.strokes = UTILS.strokePreprocessing(state.dom.canvas.getTrace(), state.treeConfig.sproutingLength);
         state.checkStrokeStarts();
     }
 
-    state.strokeState.structs = structBuilder.createStructRootsFromStrokes(state.strokeState.strokes, state.strokeState.strokeStarts, state.strokeState.joinPoints);
+    state.strokeState.structs = structBuilder.createStructRootsFromStrokes(state.strokeState.strokes, state.strokeState.strokeStarts, state.strokeState.joinPoints, state.treeConfig);
      
     GROWING.growStructs(state, debug);
 }

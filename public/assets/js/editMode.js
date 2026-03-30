@@ -4,18 +4,18 @@ import * as UTILS from "./utils.js";
 
 export function setEditMode(state){
     if(!state.editModeState.editMode){
-        state.editModeState.editMode = true;
+        state.setEditMode(true);
         state.dom.canvas.deactivate();
         if(state.dom.canvas.hasChanged){
-            state.strokeState.strokes = UTILS.strokePreprocessing(state.dom.canvas.getTrace(), state.treeConfig);
+            state.strokeState.strokes = UTILS.strokePreprocessing(state.dom.canvas.getTrace(), state.treeConfig.sproutingLength);
             state.checkStrokeStarts();
         }
-        state.dom.buttons.startPointMode.style.visibility = "visible";
-        state.dom.buttons.joinPointMode.style.visibility = "visible";
+        state.dom.buttons.startPoint.style.visibility = "visible";
+        state.dom.buttons.joinPoint.style.visibility = "visible";
         state.dom.pureCanvas.style.cursor = "not-allowed";
         state.dom.buttons.editMode.value = "Exit Edit Mode"; 
 
-        canvasDrawing.drawEditMode(state.dom.context, state.strokeState.strokes, state.strokeState.strokeStarts, state.strokeState.joinPoints, state.dom.canvas.trace);
+        canvasDrawing.drawEditMode(state.dom.canvasContext, state.strokeState.strokes, state.strokeState.strokeStarts, state.strokeState.joinPoints, state.dom.canvas.trace);
         state.dom.buttons.resetButton.disabled = true;
         state.dom.buttons.growButton.disabled = true;
         state.dom.buttons.resetGrow.disabled = true;
@@ -25,17 +25,16 @@ export function setEditMode(state){
     }
 
     else{
-        state.editModeState.editMode = false;
-        state.dom.buttons.startPointMode.style.visibility = "hidden";
-        state.dom.buttons.joinPointMode.style.visibility = "hidden";
-        state.dom.canvas.activate();
-
+        state.setEditMode(false);
         state.dom.buttons.startPoint.style.visibility = "hidden";
         state.dom.buttons.joinPoint.style.visibility = "hidden";
         state.dom.pureCanvas.style.cursor = "crosshair";
         state.dom.buttons.editMode.value = "Edit Mode"; 
 
-        canvasDrawing.drawStructs(state.dom.canvas.trace, state.strokeState.structs, state.dom.context);
+
+        state.dom.canvas.activate();
+
+        canvasDrawing.drawStructs(state.dom.canvas.trace, state.strokeState.structs, state.dom.canvasContext);
         
         state.dom.buttons.resetButton.disabled = false;
         state.dom.buttons.growButton.disabled = false;
@@ -62,7 +61,7 @@ function mouseMoveStartPoint(event, state){
                 let stroke = state.strokeState.strokes[i];
                 for(let j = 0; j < stroke.length; j++){
                     let point = stroke[j];
-                    if(UTILS.calcDistance(point, [event.offsetX, event.offsetY]) < 4){
+                    if(UTILS.calcDistance(point, [event.offsetX, event.offsetY]) < 6){
                         onStruct = true;
                         newStartPoint = {strokeIndex: i, pointIndex: j};
                         break;
@@ -104,7 +103,7 @@ export function handleMouseDown(event, state) {
 function mouseDownStartPoint(state){
     if(state.editModeState.startPointMode && state.editModeState.thisStartPoint){
         JSPA.addStartPoint(state.strokeState.joinPoints, state.strokeState.strokeStarts, state.strokeState.strokeStartsCache, state.editModeState.thisStartPoint.pointIndex, state.editModeState.thisStartPoint.strokeIndex);
-        canvasDrawing.drawEditMode(state.dom.context, state.strokeState.strokes, state.strokeState.strokeStarts, state.strokeState.joinPoints, state.dom.canvas.trace);
+        canvasDrawing.drawEditMode(state.dom.canvasContext, state.strokeState.strokes, state.strokeState.strokeStarts, state.strokeState.joinPoints, state.dom.canvas.trace);
     }
 }
 
@@ -118,6 +117,6 @@ function mouseDownJoinPoint(state){
             JSPA.removeJoinPoint(state.strokeState.joinPoints, state.strokeState.strokes, state.strokeState.strokeStarts, state.strokeState.strokeStartsCache, state.editModeState.thisJoinPoint);
             state.checkStrokeStarts();
         }
-        canvasDrawing.drawEditMode(state.dom.context, state.strokeState.strokes, state.strokeState.strokeStarts, state.strokeState.joinPoints, state.dom.canvas.trace);
+        canvasDrawing.drawEditMode(state.dom.canvasContext, state.strokeState.strokes, state.strokeState.strokeStarts, state.strokeState.joinPoints, state.dom.canvas.trace);
     }
 }

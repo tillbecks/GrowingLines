@@ -167,14 +167,14 @@ export function calculateJoinPoints(strokes, strokeStarts){
 export function crawlApply(joinPoints, thisIndice, visitedIndices, apply){
     for(let joinPoint of joinPoints){
         if(joinPoint.strokeA === thisIndice && !visitedIndices.includes(joinPoint.strokeB)){
-            visitedIndices.push(joinPoint.strokeB);
+            let visitedIndicesA = [...visitedIndices, joinPoint.strokeB];
             if(apply(joinPoint.strokeB, thisIndice)) return true;
-            if(crawlApply(joinPoint.strokeB, visitedIndices, apply)) return true;
+            if(crawlApply(joinPoints, joinPoint.strokeB, visitedIndicesA, apply)) return true;
         }
         else if(joinPoint.strokeB === thisIndice && !visitedIndices.includes(joinPoint.strokeA)){
-            visitedIndices.push(joinPoint.strokeA);
+            let visitedIndicesB = [...visitedIndices, joinPoint.strokeA];
             if(apply(joinPoint.strokeA, thisIndice)) return true;
-            if(crawlApply(joinPoint.strokeA, visitedIndices, apply)) return true;
+            if(crawlApply(joinPoints, joinPoint.strokeA, visitedIndicesB, apply)) return true;
         }
     }
     return false;
