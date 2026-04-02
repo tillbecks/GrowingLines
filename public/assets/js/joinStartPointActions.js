@@ -1,4 +1,5 @@
 import * as UTILS from "./utils.js";
+import canvasWarning from "./canvasWarning.js";
 
 /**
  * Finds the index of a join point in the joinPoints array that is close to the given joinPoint's intersection.
@@ -59,7 +60,8 @@ export function removeJoinPoint(joinPoints, strokes, strokeStarts, strokeStartsC
  */
 export function addJoinPoint(joinPoints, strokeStarts, strokeStartsCache, joinPoint){
     if(detectJoinPointCycle(joinPoints, joinPoint)){
-        alert("Joining these points would create a cycle. Operation cancelled.");
+
+        canvasWarning("Joining these points would create a cycle. Operation cancelled.");
     }
     else{
         if(strokeStarts[joinPoint.strokeA] != null ){

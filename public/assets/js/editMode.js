@@ -1,6 +1,7 @@
 import * as JSPA from "./joinStartPointActions.js";
 import * as canvasDrawing from "./canvasDrawing.js";
 import * as UTILS from "./utils.js";
+import * as AGECOUNTER from "./ageCounter.js";
 
 export function setEditMode(state){
     if(!state.editModeState.editMode){
@@ -22,6 +23,7 @@ export function setEditMode(state){
 
         const potentialJoinPoints = JSPA.calculateJoinPoints(state.strokeState.strokes, state.strokeState.strokeStarts);
         state.editModeState.potentialJoinPoints = potentialJoinPoints;
+        AGECOUNTER.hideAgeCounter();
     }
 
     else{
@@ -39,6 +41,7 @@ export function setEditMode(state){
         state.dom.buttons.resetButton.disabled = false;
         state.dom.buttons.growButton.disabled = false;
         state.dom.buttons.resetGrow.disabled = false;
+        AGECOUNTER.reviveAgeCounter();
     }
     state.updateStyleModeButtons();
 }

@@ -1,4 +1,5 @@
 import * as CD from "./canvasDrawing.js";
+import * as AGECOUNTER from "./ageCounter.js";
 
 export async function abordGrowing(state){
     if(state.growState.isGrowing){
@@ -10,6 +11,7 @@ export async function abordGrowing(state){
 
 export async function growStructs(state, debug){
     state.dom.buttons.stopGrow.disabled = false;
+    state.dom.canvas.deactivate();
     let oneStillGrowing = true;
     state.growState.play = true;
     state.growState.isGrowing = true;
@@ -57,6 +59,8 @@ export async function growStructs(state, debug){
             structs[i].draw(state.dom.canvasContext);
         }
 
+        AGECOUNTER.updateAgeCounter(structs[0].age, state.treeConfig.maxAge);
+
         await nextFrame(state);
     }
 
@@ -66,7 +70,7 @@ export async function growStructs(state, debug){
     state.growState.play = false;
     state.growState.isGrowing = false;
     state.dom.buttons.stopGrow.disabled = true;
-
+    state.dom.canvas.activate();
 
     state.dom.canvasContext.strokeStyle="black";
     

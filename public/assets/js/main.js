@@ -4,6 +4,9 @@ import * as SB from "./structBuilder.js";
 import * as CD from "./canvasDrawing.js";
 import * as EDITMODE from "./editMode.js";
 import state from "./state.js";
+import * as AGECOUNTER from "./ageCounter.js";
+
+AGECOUNTER.spawnWarning();
 
 const debug = false;
 
@@ -41,12 +44,14 @@ async function totalReset(){
     await GROWING.abordGrowing(state);
     state.reset("canvas");
     state.dom.canvas.erase();
+    AGECOUNTER.resetAgeCounter();
 }
 
 async function growReset(){
     await GROWING.abordGrowing(state);
     CD.redrawStrokes(state.dom.canvas.trace, state.dom.canvasContext);
     state.reset("grow");
+    AGECOUNTER.resetAgeCounter();
 }
 
 async function grow(){
@@ -59,6 +64,7 @@ async function grow(){
 
     state.strokeState.structs = SB.createStructRootsFromStrokes(state.strokeState.strokes, state.strokeState.strokeStarts, state.strokeState.joinPoints, state.treeConfig);
      
+    AGECOUNTER.updateAgeCounter(0, state.treeConfig.maxAge);
     GROWING.growStructs(state, debug);
 }
 
