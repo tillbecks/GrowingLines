@@ -1,0 +1,19 @@
+.highlight-red{
+    border: 2px solid red;
+}
+
+.highlight-green{
+    border: 2px solid green;
+}
+
+.highlight-blue{
+    border: 2px solid blue;
+}
+
+.highlight-yellow{
+    border: 2px solid yellow;
+}
+
+.highlight{
+    border: 2px solid var(--highlight-color, red);
+}

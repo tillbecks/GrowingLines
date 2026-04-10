@@ -1,10 +1,26 @@
-import * as UTILS from "./utils.js";
-import * as GROWING from "./growing.js";
-import * as SB from "./structBuilder.js";
-import * as CD from "./canvasDrawing.js";
-import * as EDITMODE from "./editMode.js";
-import state from "./state.js";
-import * as AGECOUNTER from "./ageCounter.js";
+import * as UTILS from "./config/utils.js";
+import * as GROWING from "./tree/growing.js";
+import * as SB from "./tree/structBuilder.js";
+import * as CD from "./canvas/canvasDrawing.js";
+import * as EDITMODE from "./canvas/editMode.js";
+import state from "./state/state.js";
+import * as AGECOUNTER from "./ui/ageCounter.js";
+import * as SLIDERFACTORY from "./ui/sliderFactory.js";
+import * as INFOBOX from "./infoBox.js";
+import * as PRESETLOADER from "./ui/presetLoader.js";
+import * as TOGGLEADVANCEDSETTINGS from "./ui/toggleAdvancedSettings.js";
+
+/*
+        <script type="module" src="assets/js/toggleAdvancedSettings.js"></script> */
+
+SLIDERFACTORY.createSliderSection();
+INFOBOX.addBindingsToInfoBox();
+PRESETLOADER.configurePresetSelector();
+TOGGLEADVANCEDSETTINGS.init();
+
+
+//evtl. load standard Preset am Anfang updateSlidersFromConfig
+
 
 AGECOUNTER.spawnWarning();
 

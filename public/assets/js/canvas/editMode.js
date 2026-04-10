@@ -1,7 +1,7 @@
-import * as JSPA from "./joinStartPointActions.js";
+import * as JSPA from "../tree/joinStartPointActions.js";
 import * as canvasDrawing from "./canvasDrawing.js";
-import * as UTILS from "./utils.js";
-import * as AGECOUNTER from "./ageCounter.js";
+import * as UTILS from "../config/utils.js";
+import * as AGECOUNTER from "../ui/ageCounter.js";
 
 export function setEditMode(state){
     if(!state.editModeState.editMode){

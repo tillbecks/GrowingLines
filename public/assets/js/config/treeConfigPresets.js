@@ -1,3 +1,5 @@
+//Die Configs sollten dann alle diese Variablen beinhalten mit einem gesetzten Wert
+
 const defaultConfig = {
     name: "Default Config",
 

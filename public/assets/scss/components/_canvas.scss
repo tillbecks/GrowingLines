@@ -1,3 +1,5 @@
+@use '../layout/flexbox' as *;
+
 canvas{
     border: 3px solid black;
     background: white;
@@ -12,5 +14,19 @@ canvas{
     overflow: auto;
     border: 5px solid white;
     flex: 1;
+}
+
+.canvas-scroll-container{
+    overflow: scroll;
+    max-width: 100%;
+    max-height: 100%;
+    min-width: 0;
+    min-height: 0;
+}
+
+.canvas-wrapper{
+    width: fit-content;
+    height: fit-content;
+    padding: 0;
 }
 

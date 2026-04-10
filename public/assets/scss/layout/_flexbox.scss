@@ -1,0 +1,142 @@
+@use '../abstracts/variables' as *;
+
+/*Basic flexbox styles for layout.*/
+
+.flex-row{
+    display: flex; 
+    gap: 20px; 
+    padding: $padding; 
+    justify-content: center; 
+    align-items: center;
+}
+
+.flex-column{
+    @extend .flex-row;
+    flex-direction: column;
+}
+
+/*Utility classes for flexbox alignment and behavior:*/
+
+.items-center{ align-items: center;}
+
+.justify-center{ justify-content: center;}
+
+.items-start{ align-items: flex-start;}
+
+.justify-start{ justify-content: flex-start;}
+
+.items-end{ align-items: flex-end;}
+
+.justify-end{ justify-content: flex-end;}
+
+.justify-between{ justify-content: space-between;}
+
+/*Utility classes for flexbox sizing:*/
+
+.flex-no-shrink-fill{ flex: 0 0 auto;}
+
+.flex-no-shrink-15{ flex: 1 1 25%;}
+
+.flex-fill{
+    flex: 1 1 auto;
+    min-height: 0;
+    min-width: 0;
+}
+
+.flex-basis-40{ flex: 1 1 40%;}
+.flex-basis-60{ flex: 1 1 60%;}
+
+.flex-srink-20-fill{ 
+    flex: 0 2 40%;
+    min-height: 0;
+}
+
+.flex-wrap{ flex-wrap: wrap;}
+
+.always-fit-content{
+    width: fit-content;
+    height: fit-content;
+    min-width: fit-content;
+    min-height: fit-content;
+}
+
+/*Overflow handling*/
+
+.of-auto{ overflow: auto};
+.of-hidden{ overflow: hidden};
+
+.relative{ position: relative;}
+
+.main-container{
+    @extend .flex-column;
+    @extend .flex-fill;
+    width: min($max-width-content, 100%);
+    padding:0;
+    gap: 0;
+}
+
+.canvas-settings-container{
+    @extend .flex-row;
+    @extend .flex-fill;
+    @extend .justify-between;
+    @extend .of-hidden;
+    width: 100%;
+    height: 100%;
+    padding: 0;
+}
+
+.canvas-section{
+    @extend .flex-column;
+    @extend .flex-basis-60;
+    @extend .items-start;
+    @extend .justify-start;
+    @extend .relative;
+    @extend .of-hidden;
+    height: 100%;
+}
+
+.info-section{
+    @extend .flex-column;
+    @extend .flex-no-shrink-15;
+    @extend .justify-start;
+    @extend .items-end;
+    @extend .of-hidden;
+    max-width: 100%;
+    width: 100%;
+    height: 100%;
+}
+
+.canvas-buttons-section{
+    @extend .flex-row;
+    @extend .flex-no-shrink-fill;
+    @extend .justify-between;
+    padding: 0;
+    width: min($canvas-width, 100%);    
+}
+
+.edit-mode-buttons{
+    @extend .flex-row;
+    padding: 0;
+}
+
+.settings-panel{
+    @extend .flex-column;
+    @extend .flex-basis-40;
+    @extend .justify-start;
+    @extend .items-start;
+    @extend .of-auto;
+    width: 100%;
+    height: 100%;
+}
+
+/*height: 100%; width: min(2000px, 100%); display:flex; flex-direction: column; gap: 20px; padding: 20px; min-height: 0;*/
+/*flex: 0 2 20%; display:flex; justify-content: center; align-items: center; overflow: hidden; min-height: 0;*/
+/*flex: 1 1 auto; min-height: 0; min-width: 0; display:flex; gap: 20px; align-items: center; justify-content: center;*/
+/*flex: 1 1 60%; box-sizing: border-box; height: 100%; min-width: 0; min-height: 0; display:flex; flex-direction:column; gap: 20px; padding: 10px; justify-content: flex-start; align-items: flex-end; position: relative;*/
+/*width: fit-content; min-height: fit-content; height: fit-content; min-width: fit-content; display:flex; justify-content: center; align-items: center;*/
+/*flex: 0 0 auto; display:flex; gap: 2px; justify-content: space-between; align-items: center; max-width: 805px; box-sizing: border-box; width: 100%;*/
+/*flex: 1 1 40%; width: fit-content; min-width: 0; min-height: 0; height: 100%; display:flex; flex-direction:column; gap: 20px; padding: 10px; */
+
+
+/*flex: 1 1 auto; min-height: 0; min-width: 0; height:610px; overflow: auto; width: 100%; max-width: 805px; box-sizing: border-box;*/
+/*border: 2px solid white; padding: 10px; height: auto; min-height: 0; overflow: auto; width: 100%; position:relative;*/

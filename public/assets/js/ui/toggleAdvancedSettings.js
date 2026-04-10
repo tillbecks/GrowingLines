@@ -3,9 +3,7 @@ const advancedSettingsToggle = document.getElementById('advancedSettingsToggle')
 const advancedSettingsContainer = document.getElementById('advancedSettingsContainer');
 const settingsArrow = document.getElementById('settingsArrow');
 
-init();
-
-function init(){
+export function init(){
     advancedSettingsContainer.style.display = 'none';
 }
 

@@ -1,12 +1,10 @@
-import * as TCPRESETS from "./treeConfigPresets.js";
+import * as TCPRESETS from "../config/treeConfigPresets.js";
 import * as sliderUpdates from "./sliderUpdates.js";
 
 const presetSelector = document.getElementById("presetSelector");
 const presetLoadButton = document.getElementById("loadPreset");
 
-configurePresetSelector();
-
-function configurePresetSelector(){
+export function configurePresetSelector(){
     for (let i = 0; i < TCPRESETS.treeConfigs.length; i++) {
         const option = document.createElement("option");
         option.value = i;

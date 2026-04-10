@@ -1,6 +1,6 @@
 //image-format for info content: {"src": "", "alt": "", "description": ""}
 
-export const informationContent = {
+export const INFORMATIONCONTENT = {
     //General Information
     growProject: {
         title: "The GROW project",
@@ -59,12 +59,6 @@ export const informationContent = {
         images: []
     },
     
-    sproutingRate: {
-        title: "Lateral Sprouting Probability",
-        text: "The probability per growth step that a new lateral sprout (side shoot) will be created. A higher value leads to more and denser branching. A node will only produce one sprout per growth cycle. Be careful with very high values, as they can lead to very dense and resource-intensive growth.",
-        images: [{"src": "assets/img/lateralSproutingProb005.png", "alt": "", "description": "Lateral Sprouting Probability of 0.005."}, {"src": "assets/img/lateralSproutingProb01.png", "alt": "", "description": "Lateral Sprouting Probability of 0.01."}]
-    },
-    
     sproutingLength: {
         title: "Sprout Length",
         text: "The initial length of new lateral sprouts. Longer sprouts grow faster into larger branches.",
@@ -76,7 +70,19 @@ export const informationContent = {
         text: "The probability that a new lateral sprout will continue to grow a main tip. A higher value results in more tip growth and longer branches.",
         images: []
     },
-    
+
+    mainSproutingRate: {
+        title: "Lateral Sprouting Probability",
+        text: "The probability per growth step that a new lateral sprout (side shoot) will be created. A higher value leads to more and denser branching. A node will only produce one sprout per growth cycle. Be careful with very high values, as they can lead to very dense and resource-intensive growth.",
+        images: [{"src": "assets/img/lateralSproutingProb005.png", "alt": "", "description": "Lateral Sprouting Probability of 0.005."}, {"src": "assets/img/lateralSproutingProb01.png", "alt": "", "description": "Lateral Sprouting Probability of 0.01."}]
+    },
+
+    secondarySproutingRate: {
+        title: "Lateral Secondary Sprouting Probability",
+        text: "The probability per growth step that secondary branches will create new lateral sprouts. A higher value leads to more branching on side shoots.",
+        images: []
+    },
+
     breakingOffProb: {
         title: "Breaking Off Probability",
         text: "The probability per growth step that a branch will break off. This simulates natural damage. A breaking branch will remove itself and all its descendants from the structure. ",

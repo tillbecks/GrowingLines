@@ -1,0 +1,24 @@
+@use '../abstracts/variables' as *;
+
+@mixin basic-grid ($columns: 5){
+    display: grid;
+    gap: $spacing-grid;
+    grid-template-columns: repeat($columns, auto);
+    justify-content: flex-start;
+    align-items: center;
+    width: 100%;
+    padding: $padding;
+}
+
+.grid-5{
+    @include basic-grid;
+}
+
+.grid-5-no-pad{
+    @include basic-grid;
+    padding: 0;
+}
+
+.grid-2{
+    @include basic-grid(2);
+}

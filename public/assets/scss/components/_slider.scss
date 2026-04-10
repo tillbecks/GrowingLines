@@ -3,6 +3,7 @@
 .slider-container{
     color: #ffffff;
     font-size: 13px;
+    overflow: auto;
     
     .button{
         background: transparent;
@@ -10,6 +11,10 @@
         color: #ffffff;
         cursor: pointer;
     }
+}
+
+.slider-section-header{
+    font-size: 1.5em;
 }
 
 .slider-label{

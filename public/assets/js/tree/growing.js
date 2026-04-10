@@ -1,5 +1,5 @@
-import * as CD from "./canvasDrawing.js";
-import * as AGECOUNTER from "./ageCounter.js";
+import * as CD from "../canvas/canvasDrawing.js";
+import * as AGECOUNTER from "../ui/ageCounter.js";
 
 export async function abordGrowing(state){
     if(state.growState.isGrowing){

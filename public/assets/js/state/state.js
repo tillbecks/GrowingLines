@@ -1,5 +1,5 @@
-import * as POINTACTIONS from "./joinStartPointActions.js";
-import * as TCPRESETS from "./treeConfigPresets.js";
+import * as POINTACTIONS from "../tree/joinStartPointActions.js";
+import * as TCPRESETS from "../config/treeConfigPresets.js";
 
 class State{
     constructor(){

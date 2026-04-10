@@ -1,8 +1,7 @@
-import * as UTILS from "./utils.js";
+import * as UTILS from "../config/utils.js";
 
 export class Node {
     constructor(config, position, ancestor, descendants, centerOfMass = 0){
-        console.assert((ancestor == null || ancestor instanceof Node), "Ancestor must be of type Node or null");
         this.config = config;
 
         this.position = position;
@@ -25,7 +24,6 @@ export class Node {
     }
 
     grow(forceFields, crowdingForce = 1){
-
         if(this.age < this.maxAge){
             if(this.thickness < this.maxThickness){
                 let growRateMultiplier = 1 ;
