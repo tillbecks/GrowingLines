@@ -10,7 +10,8 @@ let ageCounterMax = 0;
 let lastRect = null;
 
 export function spawnCounter(maxAge = 0){
-    const canvasSection = document.getElementById("canvasSection");
+    //const canvasSection = document.getElementById("canvasSection");
+    const canvasSection = document.getElementById("canvasAgeContainer");
     
     ageCounterLast = 0;
     ageCounterMax = maxAge;

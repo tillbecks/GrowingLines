@@ -1,11 +1,42 @@
 @use '../abstracts/variables' as *;
 @use '../layout/flexbox' as *;
 
-$info-box-width: 120px;
-$info-box-height: 30px;
+$info-box-button-width: 120px;
+$info-box-button-height: 30px;
+
+$info-box-collapsed-width: $info-box-button-width + $padding * 2;
+$info-box-collapsed-height: $info-box-button-height + $padding * 2;
+
+$info-section-collapsed-height: $info-box-collapsed-height + $padding * 2;
 
 $image-description-padding: 5px;
 $image-container-size: 250px;
+
+.info-section{
+    @extend .flex-column;
+    @extend .justify-start;
+    @extend .items-start;
+    @extend .of-hidden;
+    height: 35%;
+    width: 100%;
+    transition: height 1s ease, flex 1s ease;
+}
+
+.info-section.collapsed{
+    @extend .flex-no-shrink-fill;
+    height: $info-section-collapsed-height;
+    transition: height 1s ease, flex 1s ease;
+
+    .info-box-container{
+        height: $info-box-collapsed-height;
+        width: $info-box-collapsed-width;
+        transition: height 1s ease, width 1s ease;
+    }
+
+    .info-box-content{
+        display: none;
+    }
+}
 
 .info-box-container{
     @extend .of-hidden;
@@ -21,23 +52,17 @@ $image-container-size: 250px;
     transition: height 1s ease, width 1s ease;
 }
 
-.info-box-container.collapsed{
-    @extend .info-box-container;
-    height: $info-box-height + $padding * 2;
-    width: $info-box-width + $padding * 2;
-    transition: height 0.5s ease, width 0.5s ease;
-}
-
 .info-box-hide-button{
     position: absolute; 
-    top: $padding; 
-    right: $padding; 
-    width: $info-box-width;
-    height: $info-box-height;
+    top: $padding * 0.75;
+    right: $padding * 0.75; 
+    width: $info-box-button-width;
+    height: $info-box-button-height;
     font-size: 1.2em;
-
     z-index: 1;
 }
+
+
 
 .info-box-content{
     @extend .flex-column;
@@ -45,10 +70,6 @@ $image-container-size: 250px;
     @extend .of-auto;
     width: 100%;
     height: 100%;
-}
-
-.info-box-container.collapsed .info-box-content{
-    display: none;
 }
 
 .info-box-title{

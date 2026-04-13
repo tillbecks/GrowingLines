@@ -1,25 +1,45 @@
-@use "../abstracts/colors" as *;
+@use "../abstracts" as *;
+@use "../layout/flexbox" as *;
+
+.edit-mode-buttons{
+    @extend .flex-row;
+    @extend .flex-fill;
+    @extend .justify-start;
+    overflow: auto;
+    gap: 0;
+    transition: gap 0.5s ease;
+    padding: 0;
+}
+
+.edit-mode-buttons.editModeActive{
+    gap: $flex-gap;
+    transition: gap 0.5s ease;
+    #joinPointButton, #startPointButton{
+        opacity: 1;
+        transform: translateX(0);
+        transition: transform 0.5s ease, opacity 0.5s ease;
+    }
+}
 
 #editModeButton{
     width: 250px;
+    z-index: 10;
 }
 
-#startPointButton{
-    color: $start-point-color;
-    visibility: hidden;
+.mode-button{
+    opacity: 0;
+    transform: translateX(-100px);
+    transition: transform 0.5s ease, opacity 0.5s ease;
     font-weight: bold;
+    z-index: 1;
 }
 
 #joinPointButton{
     color: $join-point-color;
-    visibility: hidden;
-    font-weight: bold;
 }
 
-.editModeActive{
-    #joinPointButton, #startPointButton{
-        visibility: visible;
-    }
+#startPointButton{
+    color: $start-point-color;
 }
 
 .joinMode{

@@ -13,16 +13,18 @@
 
             <div class="canvas-settings-container">
                     <div id="canvasSection" class="canvas-section">
-                        <div id="canvasScrollContainer" class="canvas-scroll-container">
-                            <div id = "canvasContainer" class="canvas-wrapper">
-                                <canvas id="canvas" width="800" height="600" ></canvas>
+                        <div id ="canvasAgeContainer" class="canvas-age-container">
+                            <div id="canvasScrollContainer" class="canvas-scroll-container">
+                                <div id = "canvasContainer" class="canvas-wrapper">
+                                    <canvas id="canvas" width="800" height="600" ></canvas>
+                                </div>
                             </div>
                         </div>
                         <div class="canvas-buttons-section">
                             <div id="editModeButtonsContainer" class="edit-mode-buttons">
                                 <input id="editModeButton" type="button" value="Edit Mode" autocomplete="off" class="button">
-                                <input id="startPointButton" type="button" value="⦿" autocomplete="off" class="button" title="Click to set new Start Points">
-                                <input id="joinPointButton" type="button" value="⦿" autocomplete="off" class="button" title="Click to join Lines">
+                                <input id="startPointButton" type="button" value="⦿" autocomplete="off" class="button mode-button" title="Click to set new Start Points">
+                                <input id="joinPointButton" type="button" value="⦿" autocomplete="off" class="button mode-button" title="Click to join Lines">
                             </div>
                             <div class="flex-no-shrink-fill of-auto">
                                 <input id="downloadButton" type="button" value="⭳" autocomplete="off" class="button" title="Download canvas as PNG">
@@ -51,9 +53,9 @@
                     </div>
             </div>
             
-            <div class="info-section">
+            <div id="infoSection" class="info-section">
                 <!--div "border: 2px solid white; padding: 10px; height: fit-content; width: fit-content; min-height: 0; overflow: auto; position:relative; color:white;-->
-                <div id="infoBoxContainer"class="info-box-container">
+                <div id="infoBoxContainer" class="info-box-container">
                     <input id="infoBoxHideButton" type="button" value="hide InfoBox" autocomplete="off" class="button info-box-hide-button">
                     <div id="infoBoxContent" class="info-box-content">
                         <h1 id = "infoBoxTitle" class="info-box-title">Information</h1>

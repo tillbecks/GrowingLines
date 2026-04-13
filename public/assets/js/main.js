@@ -11,6 +11,7 @@ import * as TOGGLEADVANCEDSETTINGS from "./ui/toggleAdvancedSettings.js";
 import * as APPCONFIG from "./config/appConfig.js";
 import { initialDrawingData } from "./config/initDrawingData.js";
 import state from "./state/state.js";
+import { redrawAndDownloadCanvasAsImage } from "./ui/downloadCanvas.js";
 
 SLIDERFACTORY.createSliderSection();
 INFOBOX.addBindingsToInfoBox();
@@ -32,7 +33,7 @@ state.dom.buttons.stopGrow.addEventListener("click", ()=>{state.setPlay();});
 state.dom.buttons.editMode.addEventListener("click", ()=>{EDITMODE.setEditMode(state);});
 state.dom.buttons.startPoint.addEventListener("click", ()=>{state.setStartPointModus();});
 state.dom.buttons.joinPoint.addEventListener("click", ()=>{state.setJoinPointModus();});
-state.dom.buttons.download.addEventListener("click", downloadCanvasAsImage);
+state.dom.buttons.download.addEventListener("click", ()=>{redrawAndDownloadCanvasAsImage(state.dom.pureCanvas, state.strokeState.structs);});
 
 document.onmousemove = handleMouseMove;
 document.onmousedown = handleMouseDown;
@@ -89,10 +90,3 @@ async function grow(){
     GROWING.growStructs(state);
 }
 
-function downloadCanvasAsImage(){
-    const link = document.createElement('a');
-    link.href = state.dom.pureCanvas.toDataURL('image/png');
-    const timestamp = new Date().toISOString().slice(0, 19).replace(/:/g, '-');
-    link.download = `canvas_${timestamp}.png`;
-    link.click();
-}

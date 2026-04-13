@@ -16,7 +16,6 @@ export async function growStructs(state){
         state.dom.buttons.stopGrow.disabled = false;
         state.dom.canvas.deactivate();
         let oneStillGrowing = true;
-        state.growState.play = true;
         state.growState.isGrowing = true;
         state.setPlay(true);
         
@@ -54,12 +53,10 @@ export async function growStructs(state){
 
 
         state.growState.abordGrow = false;
-        state.growState.play = false;
+        state.setPlay(false);
         state.growState.isGrowing = false;
         state.dom.buttons.stopGrow.disabled = true;
         state.dom.canvas.activate();
-
-        state.dom.canvasContext.strokeStyle="black";
     }
 }
 

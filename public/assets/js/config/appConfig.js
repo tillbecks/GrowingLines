@@ -31,3 +31,12 @@ export const WARNINGMESSAGES = {
 
 export const INITDRAWING = true;
 
+//Canvas color configs
+
+export const USERSTROKECOLOR = "#a7a7a7";
+export const GROWINGSTROKECOLOR = "#000000";
+export const USERSTROKEWIDTH = 1;
+
+//Canvas download config
+
+export const DELTAETHRESHOLD = 30;

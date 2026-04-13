@@ -6,16 +6,26 @@
     @extend .justify-start;
     @extend .items-start;
 
-    color: #ffffff;
+    color: $primary-color;
     font-size: 13px;
     overflow: auto; 
+    height: 100%;
+
+    transition: height 0.5s ease, padding-top 0.5s ease;
     
     .button{
         background: transparent;
         border: none;
-        color: #ffffff;
+        color: $primary-color;
         cursor: pointer;
     }
+}
+
+.slider-container.hidden{
+    height: 0;
+    padding-top: 0;
+    padding-bottom: 0;
+    transition: height 0.5s ease, padding-top 0.25s ease, padding-bottom 0.25s ease;
 }
 
 .slider-section-header{

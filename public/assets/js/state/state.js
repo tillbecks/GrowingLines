@@ -1,5 +1,6 @@
 import * as POINTACTIONS from "../tree/joinStartPointActions.js";
 import * as TCPRESETS from "../config/treeConfigPresets.js";
+import * as AC from "../config/appConfig.js";
 
 class State{
     constructor(){
@@ -33,11 +34,11 @@ class State{
     }
 
     initDom(){
-        const canvas = document.getElementById("canvas");
+        const canvas = this.initCanvas();
         this.dom = {
             pureCanvas: canvas,
-            canvas: new handwriting.Canvas(canvas),
             canvasContext: canvas.getContext("2d"),
+            canvas: new handwriting.Canvas(canvas, AC.USERSTROKEWIDTH),
             buttons: {
                 resetButton: document.getElementById("resetButton"),
                 growButton: document.getElementById("growButton"),
@@ -47,10 +48,21 @@ class State{
                 startPoint: document.getElementById("startPointButton"),
                 joinPoint: document.getElementById("joinPointButton"),
                 download: document.getElementById("downloadButton"),
-                ageCounter: document.getElementById("ageCounter"),
+                loadPreset: document.getElementById("loadPreset"),
             },
             editModeButtonsContainer: document.getElementById("editModeButtonsContainer"),
         };
+    }
+
+    initCanvas(){
+        const canvas = document.getElementById("canvas");
+        //Set canvas drawing color and width
+        canvas.getContext("2d").strokeStyle = AC.USERSTROKECOLOR;
+        canvas.getContext("2d").lineWidth = AC.USERSTROKEWIDTH;
+        canvas.getContext("2d").globalAlpha = 1;
+        canvas.getContext("2d").globalCompositeOperation = "source-over";
+
+        return canvas;
     }
 
     setEditMode(mode){

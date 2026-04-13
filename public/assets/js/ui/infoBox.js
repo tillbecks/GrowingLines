@@ -5,7 +5,7 @@ export function bindObjectToInfoBox(objectId, contentObjectKey){
     if(INFORMATIONCONTENT[contentObjectKey]){
         element.addEventListener("click", () => {
             setInfoBoxContent(INFORMATIONCONTENT[contentObjectKey]);
-            toggleInfoBox(true);
+            //toggleInfoBox(true);
         });
     }
 }
@@ -50,15 +50,15 @@ function createImageDescription(src, alt="", description){
     return container;
 }
 
-const infoBoxContainer = document.getElementById("infoBoxContainer");
+const infoSection = document.getElementById("infoSection");
 const infoBoxHideButton = document.getElementById("infoBoxHideButton");
 
 function toggleInfoBox(show = null){
-    if(show == true || infoBoxContainer.classList.contains("collapsed")){
-        infoBoxContainer.classList.remove("collapsed");
+    if(show == true || infoSection.classList.contains("collapsed")){
+        infoSection.classList.remove("collapsed");
         infoBoxHideButton.value = "hide InfoBox";
     } else {
-        infoBoxContainer.classList.add("collapsed");
+        infoSection.classList.add("collapsed");
         infoBoxHideButton.value = "show InfoBox";
     }
 }

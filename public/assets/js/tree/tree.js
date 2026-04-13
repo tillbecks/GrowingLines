@@ -1,4 +1,5 @@
 import * as UTILS from "../config/utils.js";
+import { drawTreeNode } from "../canvas/canvasDrawing.js";
 
 export class Node {
     constructor(config, position, ancestor, descendants, centerOfMass = 0){
@@ -67,12 +68,7 @@ export class Node {
 
     draw(context){
         if(this.ancestor != null && this.age > 0){
-            context.lineWidth = (this.thickness);// + this.ancestor.thickness)/2;
-            context.strokeStyle = "#000000"; //Maybe later gradient depending on age or thickness
-            context.beginPath();
-            context.moveTo(this.position[0], this.position[1]);
-            context.lineTo(this.ancestor.position[0], this.ancestor.position[1]);
-            context.stroke();
+            drawTreeNode(context, this.position, this.ancestor.position, this.thickness);
         }
         for(let descendant of this.descendants){
             descendant.draw(context);
