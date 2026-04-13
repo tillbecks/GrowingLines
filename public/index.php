@@ -6,6 +6,7 @@
         <link rel="icon" type="image/x-icon" href="./assets/img/icon.png">
     </head>
     <body>
+        <canvas id="backgroundCanvas"></canvas>
         <div class="main-container">
             <div class="flex-row flex-srink-20-fill">
                 <img id="growLogo" src="assets/img/GrowLogo.png" alt="Grow Logo" class="clickable">

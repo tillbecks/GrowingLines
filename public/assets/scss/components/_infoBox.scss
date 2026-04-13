@@ -1,5 +1,6 @@
 @use '../abstracts/variables' as *;
 @use '../layout/flexbox' as *;
+@use '../utilities/typography' as *;
 
 $info-box-button-width: 120px;
 $info-box-button-height: 30px;
@@ -40,6 +41,7 @@ $image-container-size: 250px;
 
 .info-box-container{
     @extend .of-hidden;
+    @include outlined;
     height: 100%;
     width: 100%;
 

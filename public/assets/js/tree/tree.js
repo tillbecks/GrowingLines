@@ -66,12 +66,12 @@ export class Node {
         }
     }
 
-    draw(context){
+    draw(primaryCanvas, secondaryCanvas){
         if(this.ancestor != null && this.age > 0){
-            drawTreeNode(context, this.position, this.ancestor.position, this.thickness);
+            drawTreeNode(primaryCanvas, secondaryCanvas, this.position, this.ancestor.position, this.thickness);
         }
         for(let descendant of this.descendants){
-            descendant.draw(context);
+            descendant.draw(primaryCanvas, secondaryCanvas);
         }
     }
 

@@ -42,15 +42,13 @@ export async function growStructs(state){
                     }               
                 }
                 oneStillGrowing = structs[i].grow(otherForceFields) || oneStillGrowing;
-                structs[i].draw(state.dom.canvasContext);
+                structs[i].draw(state.dom.pureCanvas, state.dom.backgroundCanvas);
             }
 
             AGECOUNTER.updateAgeCounter(structs[0].age, state.treeConfig.maxAge);
 
             await nextFrame(state);
         }
-
-
 
         state.growState.abordGrow = false;
         state.setPlay(false);

@@ -1,9 +1,9 @@
 import * as AC from "../config/appConfig.js";
 
-export function drawStructs(trace, structs, context){
-    redrawStrokes(trace, context);
+export function drawStructs(trace, structs, primaryCanvas, secondaryCanvas){
+    redrawStrokes(trace, primaryCanvas.getContext("2d"));
     for(let node of structs){
-        node.draw(context);
+        node.draw(primaryCanvas, secondaryCanvas);
     }
 }
 
@@ -64,7 +64,9 @@ export function drawDebugInfo(context, structs, crowdingMinDist, forceFields){
     resetColor(context);
 }
 
-export function drawTreeNode(context, position, ancestorPosition, thickness){
+export function drawTreeNode(primaryCanvas, secondaryCanvas, position, ancestorPosition, thickness){
+    const context = primaryCanvas.getContext("2d");
+
     context.lineWidth = (thickness);// + this.ancestor.thickness)/2;
     context.strokeStyle = AC.GROWINGSTROKECOLOR; //Maybe later gradient depending on age or thickness
     context.beginPath();
@@ -72,6 +74,29 @@ export function drawTreeNode(context, position, ancestorPosition, thickness){
     context.lineTo(ancestorPosition[0], ancestorPosition[1]);
     context.stroke();
     resetColor(context);
+
+    const offsetX = primaryCanvas.getBoundingClientRect().left;
+    const offsetY = primaryCanvas.getBoundingClientRect().top;
+    const secondaryContext = secondaryCanvas.getContext("2d");
+    secondaryContext.lineWidth = (thickness);// + this.ancestor.thickness)/2;
+    secondaryContext.strokeStyle = AC.PRIMARYCOLOR; //Maybe later gradient depending on age or thickness
+    secondaryContext.beginPath();
+    secondaryContext.moveTo(position[0] + offsetX, position[1] + offsetY);
+    secondaryContext.lineTo(ancestorPosition[0] + offsetX, ancestorPosition[1] + offsetY);
+    secondaryContext.stroke();
+    resetColor(secondaryContext);
+}
+
+export function copyInvertCanvas(sourceCanvas, targetCanvas){
+    const offsetX = sourceCanvas.getBoundingClientRect().left;
+    const offsetY = sourceCanvas.getBoundingClientRect().top;
+
+    const targetContext = targetCanvas.getContext('2d');
+    targetContext.fillStyle = AC.SECONDARYCOLOR;
+    targetContext.fillRect(0, 0, targetCanvas.width, targetCanvas.height);
+    targetContext.filter = "invert(1)";
+    targetContext.drawImage(sourceCanvas, offsetX, offsetY);
+    targetContext.filter = "none";
 }
 
 function resetColor(context){

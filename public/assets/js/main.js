@@ -12,6 +12,7 @@ import * as APPCONFIG from "./config/appConfig.js";
 import { initialDrawingData } from "./config/initDrawingData.js";
 import state from "./state/state.js";
 import { redrawAndDownloadCanvasAsImage } from "./ui/downloadCanvas.js";
+import * as BACKGROUNDCANVAS from "./ui/backgroundCanvas.js";
 
 SLIDERFACTORY.createSliderSection();
 INFOBOX.addBindingsToInfoBox();
@@ -19,6 +20,7 @@ PRESETLOADER.configurePresetSelector();
 PRESETLOADER.loadDefaultPreset();
 TOGGLEADVANCEDSETTINGS.init();
 AGECOUNTER.spawnCounter(state.treeConfig.maxAge);
+BACKGROUNDCANVAS.initCanvas();
 
 let actionQueue = Promise.resolve();
 
@@ -65,7 +67,6 @@ function handleMouseMove(event){
 async function totalReset(){
     await GROWING.abordGrowing(state);
     state.reset("canvas");
-    state.dom.canvas.erase();
     AGECOUNTER.updateAgeCounter(0, state.treeConfig.maxAge);
 }
 
@@ -78,6 +79,7 @@ async function growReset(){
 
 async function grow(){
     await GROWING.abordGrowing(state);
+    state.reset("grow");
 
     if(state.dom.canvas.hasChanged){
         state.strokeState.strokes = UTILS.strokePreprocessing(state.dom.canvas.getTrace(), state.treeConfig.sproutingLength);

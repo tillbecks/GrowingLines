@@ -9,6 +9,8 @@ export async function setEditMode(state){
         await GROWING.abordGrowing(state);
         
         state.setEditMode(true);
+        state.reset("editMode");
+        
         state.dom.canvas.deactivate();
         if(state.dom.canvas.hasChanged){
             state.strokeState.strokes = UTILS.strokePreprocessing(state.dom.canvas.getTrace(), state.treeConfig.sproutingLength);
@@ -28,16 +30,14 @@ export async function setEditMode(state){
         state.editModeState.potentialJoinPoints = potentialJoinPoints;
         AGECOUNTER.hideAgeCounter();
     }
-
     else{
         state.setEditMode(false);
         state.dom.pureCanvas.classList.remove("not-allowed-cursor");
         state.dom.buttons.editMode.value = "Edit Mode"; 
 
-
         state.dom.canvas.activate();
 
-        CANVASDRAWING.drawStructs(state.dom.canvas.trace, state.strokeState.structs, state.dom.canvasContext);
+        CANVASDRAWING.drawStructs(state.dom.canvas.trace, state.strokeState.structs, state.dom.pureCanvas, state.dom.backgroundCanvas);
         
         state.dom.buttons.resetButton.disabled = false;
         state.dom.buttons.growButton.disabled = false;

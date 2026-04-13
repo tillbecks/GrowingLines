@@ -39,6 +39,7 @@ class State{
             pureCanvas: canvas,
             canvasContext: canvas.getContext("2d"),
             canvas: new handwriting.Canvas(canvas, AC.USERSTROKEWIDTH),
+            backgroundCanvas: document.getElementById("backgroundCanvas"),
             buttons: {
                 resetButton: document.getElementById("resetButton"),
                 growButton: document.getElementById("growButton"),
@@ -144,15 +145,26 @@ class State{
             this.editModeState = newState.editModeState;
             this.dom.canvas.erase();
         };
+
+        const resetBackgroundCanvas = () => {
+            this.dom.backgroundCanvas.getContext("2d").fillStyle = AC.SECONDARYCOLOR;
+            this.dom.backgroundCanvas.getContext("2d").fillRect(0, 0, this.dom.backgroundCanvas.width, this.dom.backgroundCanvas.height);
+        }
     
         const resets = {
             "all": () => {
                 resetCore();
                 this.treeConfig = TCPRESETS.treeConfigs[TCPRESETS.defaultTreeConfigIndex];
             },
-            "canvas": () => resetCore(),
+            "canvas": () => {
+                resetCore();
+            },
             "grow": () => {
                 this.strokeState.structs = [];
+                resetBackgroundCanvas();
+            },
+            "editMode": () => {
+                resetBackgroundCanvas();
             }
         };
     

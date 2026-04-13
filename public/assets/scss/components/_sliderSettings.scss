@@ -1,10 +1,12 @@
 @use '../abstracts' as *;
 @use '../layout/flexbox' as *;
+@use '../utilities/typography' as *;
 
 .slider-container{
     @extend .flex-column;
     @extend .justify-start;
     @extend .items-start;
+    @include outlined;
 
     color: $primary-color;
     font-size: 13px;

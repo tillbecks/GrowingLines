@@ -1,3 +1,8 @@
+//General config
+
+export const PRIMARYCOLOR = "#ffffff";
+export const SECONDARYCOLOR = "#000000";
+
 // Age Counter config
 
 export const PROXIMITYTHRESHOLD = 10;
@@ -34,9 +39,10 @@ export const INITDRAWING = true;
 //Canvas color configs
 
 export const USERSTROKECOLOR = "#a7a7a7";
-export const GROWINGSTROKECOLOR = "#000000";
+export const GROWINGSTROKECOLOR = SECONDARYCOLOR;
 export const USERSTROKEWIDTH = 1;
 
 //Canvas download config
 
 export const DELTAETHRESHOLD = 30;
+
