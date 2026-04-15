@@ -1,6 +1,7 @@
 import * as POINTACTIONS from "../tree/joinStartPointActions.js";
 import * as TCPRESETS from "../config/treeConfigPresets.js";
 import * as AC from "../config/appConfig.js";
+import * as DRAWING from "../canvas/canvasDrawing.js";
 
 class State{
     constructor(){
@@ -83,7 +84,7 @@ class State{
 
     setPlay(value=!this.growState.play){
         this.growState.play = value;
-        this.dom.buttons.stopGrow.value = !this.growState.play ? "▶" : "⏸";
+        this.dom.buttons.stopGrow.value = !this.growState.play ? "\u25B6" : "\u23F8";
     }
 
     setStartPointModus(){
@@ -142,13 +143,18 @@ class State{
             const newState = new State();
             this.strokeState = newState.strokeState;
             this.growState = newState.growState;
-            this.editModeState = newState.editModeState;
-            this.dom.canvas.erase();
+            this.editModeState = newState.editModeState
+            resetForegroundCanvas();
+            resetBackgroundCanvas();
         };
 
         const resetBackgroundCanvas = () => {
-            this.dom.backgroundCanvas.getContext("2d").fillStyle = AC.SECONDARYCOLOR;
-            this.dom.backgroundCanvas.getContext("2d").fillRect(0, 0, this.dom.backgroundCanvas.width, this.dom.backgroundCanvas.height);
+            DRAWING.clearCanvas(this.dom.backgroundCanvas.getContext("2d"), AC.SECONDARYCOLOR);
+        }
+
+        const resetForegroundCanvas = () => {
+            this.dom.canvas.erase();
+            DRAWING.clearCanvas(this.dom.pureCanvas.getContext("2d"), AC.PRIMARYCOLOR);
         }
     
         const resets = {

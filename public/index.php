@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
     <head>
+        <meta charset="UTF-8">
         <title>Growth Project</title>
         <link rel="stylesheet" href="assets/css/style.css">
         <link rel="icon" type="image/x-icon" href="./assets/img/icon.png">
@@ -12,7 +13,7 @@
                 <img id="growLogo" src="assets/img/GrowLogo.png" alt="Grow Logo" class="clickable">
             </div>
 
-            <div class="canvas-settings-container">
+            <div id="canvasSettingsContainer" class="canvas-settings-container">
                     <div id="canvasSection" class="canvas-section">
                         <div id ="canvasAgeContainer" class="canvas-age-container">
                             <div id="canvasScrollContainer" class="canvas-scroll-container">
@@ -24,11 +25,11 @@
                         <div class="canvas-buttons-section">
                             <div id="editModeButtonsContainer" class="edit-mode-buttons">
                                 <input id="editModeButton" type="button" value="Edit Mode" autocomplete="off" class="button">
-                                <input id="startPointButton" type="button" value="⦿" autocomplete="off" class="button mode-button" title="Click to set new Start Points">
-                                <input id="joinPointButton" type="button" value="⦿" autocomplete="off" class="button mode-button" title="Click to join Lines">
+                                <input id="startPointButton" type="button" value="&#9679;" autocomplete="off" class="button mode-button" title="Click to set new Start Points">
+                                <input id="joinPointButton" type="button" value="&#9679;" autocomplete="off" class="button mode-button" title="Click to join Lines">
                             </div>
                             <div class="flex-no-shrink-fill of-auto">
-                                <input id="downloadButton" type="button" value="⭳" autocomplete="off" class="button" title="Download canvas as PNG">
+                                <input id="downloadButton" type="button" value="&#x2913;" autocomplete="off" class="button" title="Download canvas as PNG">
                             </div>
                         </div>
                     </div>
@@ -38,7 +39,7 @@
                             <input id="resetButton" type="button" value="Reset" autocomplete="off" class="button">
                             <input id="growButton" type="button" value="Grow" autocomplete="off" class="button">
                             <input id="resetGrow" type="button" value="ResetGrow"  autocomplete="off" class="button">
-                            <input id="stopGrow" type="button" value="▶" autocomplete="off" disabled="true" class="button">
+                            <input id="stopGrow" type="button" value="&#9654;" autocomplete="off" disabled="true" class="button">
                         </div>
                         <h1>Presets</h1>
                         <div class="flex-row flex-wrap items-start justify-start">

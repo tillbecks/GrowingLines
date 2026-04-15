@@ -19,7 +19,7 @@ function createSlider(id, config, container) {
     decrBtn.type = "button";
     decrBtn.id = SLIDERNAMING.decrButtonName(id);
     decrBtn.className = "button font-bold";
-    decrBtn.value = "🢐";
+    decrBtn.value = "\u25C0";
     container.appendChild(decrBtn);
     
     // Slider
@@ -39,7 +39,7 @@ function createSlider(id, config, container) {
     incrBtn.type = "button";
     incrBtn.id = SLIDERNAMING.incrButtonName(id);
     incrBtn.className = "button font-bold";
-    incrBtn.value = "🢒";
+    incrBtn.value = "\u25B6";
     container.appendChild(incrBtn);
     
     // Value Display
