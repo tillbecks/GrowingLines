@@ -71,7 +71,9 @@
             </div>
         </div>
 
-        <script type="text/javascript" src="assets/js/libs/handwriting.js/handwriting.canvas.js"></script>
+        <script type="text/javascript" src="assets/js/libs/handwriting/handwriting.js"></script>
+        <script type="text/javascript" src="assets/js/libs/handwriting/handwriting.canvas.js"></script>
         <script type="module" src="assets/js/main.js"></script>
-    </body>
+    </body>libs/handwriting/handwriting.js"></script>
+        <script type="text/javascript" src="assets/js/libs/handwriting
 </html>

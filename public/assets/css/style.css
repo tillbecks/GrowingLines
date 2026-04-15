@@ -1,0 +1,661 @@
+/* Box sizing rules */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+/* Prevent font size inflation */
+html {
+  -moz-text-size-adjust: none;
+  -webkit-text-size-adjust: none;
+  text-size-adjust: none;
+}
+
+/* Remove default margin in favour of better control in authored CSS */
+body, h1, h2, h3, h4, p,
+figure, blockquote, dl, dd {
+  margin-block-end: 0;
+}
+
+/* Remove list styles on ul, ol elements with a list role, which suggests default styling will be removed */
+ul[role=list],
+ol[role=list] {
+  list-style: none;
+}
+
+/* Set core body defaults */
+body {
+  min-height: 100%;
+  line-height: 1.5;
+}
+
+/* Set shorter line heights on headings and interactive elements */
+h1, h2, h3, h4,
+button, input, label {
+  line-height: 1.1;
+}
+
+/* Balance text wrapping on headings */
+h1, h2,
+h3, h4 {
+  text-wrap: balance;
+}
+
+/* A elements that don't have a class get default styles */
+a:not([class]) {
+  text-decoration-skip-ink: auto;
+  color: currentColor;
+}
+
+/* Make images easier to work with */
+img,
+picture {
+  max-width: 100%;
+  display: block;
+}
+
+/* Inherit fonts for inputs and buttons */
+input, button,
+textarea, select {
+  font-family: inherit;
+  font-size: inherit;
+}
+
+/* Make sure textareas without a rows attribute are not tiny */
+textarea:not([rows]) {
+  min-height: 10em;
+}
+
+/* Anything that has been anchored to should have extra scroll margin */
+:target {
+  scroll-margin-block: 5ex;
+}
+
+*,
+:before,
+:after {
+  box-sizing: border-box;
+}
+
+html, body {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  height: 100vh;
+  width: 100vw;
+  overflow: hidden;
+  background: black;
+  color: white;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-family: monospace;
+}
+
+/*Basic flexbox styles for layout.*/
+.flex-row, .edit-mode-buttons, .info-box, #advancedSettingsToggle, .canvas-buttons-section, .canvas-settings-container, .flex-column, .info-section, .info-box-content, .info-box-image-container, .image-description-container, .slider-container, .settings-panel, .canvas-section, .main-container {
+  display: flex;
+  gap: 20px;
+  padding: 10px;
+  justify-content: center;
+  align-items: center;
+}
+
+.flex-column, .info-section, .info-box-content, .info-box-image-container, .image-description-container, .slider-container, .settings-panel, .canvas-section, .main-container {
+  flex-direction: column;
+}
+
+/*Utility classes for flexbox alignment and behavior:*/
+.items-center, .info-box-image-container {
+  align-items: center;
+}
+
+.justify-center, .info-box-image-container, .settings-panel, .canvas-section {
+  justify-content: center;
+}
+
+.items-start, .info-section, .info-box-image-container.gallery, .slider-container, #advancedSettingsToggle, .settings-panel, .canvas-section {
+  align-items: flex-start;
+}
+
+.justify-start, .edit-mode-buttons, .info-section, .info-box-content, .slider-container {
+  justify-content: flex-start;
+}
+
+.items-end {
+  align-items: flex-end;
+}
+
+.justify-end {
+  justify-content: flex-end;
+}
+
+.justify-between, .canvas-buttons-section, .canvas-settings-container {
+  justify-content: space-between;
+}
+
+/*Utility classes for flexbox sizing:*/
+.flex-no-shrink-fill, .info-section.collapsed, .canvas-buttons-section {
+  flex: 0 0 auto;
+}
+
+.flex-no-shrink-35 {
+  flex: 1 1 35%;
+}
+
+.flex-fill, .edit-mode-buttons, .canvas-settings-container, .main-container {
+  flex: 1 1 auto;
+  min-height: 0;
+  min-width: 0;
+}
+
+.flex-basis-40, .settings-panel {
+  flex: 1 1 40%;
+}
+
+.flex-basis-60, .canvas-section {
+  flex: 1 1 60%;
+}
+
+.flex-srink-20-fill {
+  flex: 0 2 40%;
+  min-height: 0;
+}
+
+.flex-wrap {
+  flex-wrap: wrap;
+}
+
+.always-fit-content {
+  width: fit-content;
+  height: fit-content;
+  min-width: fit-content;
+  min-height: fit-content;
+}
+
+/*Overflow handling*/
+.of-auto, .info-box-content, .settings-panel {
+  overflow: auto;
+}
+
+.of-hidden, .info-section, .info-box-container, .canvas-section, .canvas-settings-container {
+  overflow: hidden;
+}
+
+.relative, .canvas-section {
+  position: relative;
+}
+
+.main-container {
+  width: min(1500px, 100%);
+  padding: 0;
+  gap: 0;
+}
+
+.canvas-settings-container {
+  width: 100%;
+  height: 100%;
+  padding: 0;
+}
+
+.canvas-section {
+  height: 100%;
+}
+
+.canvas-buttons-section {
+  padding: 0;
+  width: min(800px, 100%);
+}
+
+.settings-panel {
+  width: 100%;
+  height: 100%;
+}
+
+/*height: 100%; width: min(2000px, 100%); display:flex; flex-direction: column; gap: 20px; padding: 20px; min-height: 0;*/
+/*flex: 0 2 20%; display:flex; justify-content: center; align-items: center; overflow: hidden; min-height: 0;*/
+/*flex: 1 1 auto; min-height: 0; min-width: 0; display:flex; gap: 20px; align-items: center; justify-content: center;*/
+/*flex: 1 1 60%; box-sizing: border-box; height: 100%; min-width: 0; min-height: 0; display:flex; flex-direction:column; gap: 20px; padding: 10px; justify-content: flex-start; align-items: flex-end; position: relative;*/
+/*width: fit-content; min-height: fit-content; height: fit-content; min-width: fit-content; display:flex; justify-content: center; align-items: center;*/
+/*flex: 0 0 auto; display:flex; gap: 2px; justify-content: space-between; align-items: center; max-width: 805px; box-sizing: border-box; width: 100%;*/
+/*flex: 1 1 40%; width: fit-content; min-width: 0; min-height: 0; height: 100%; display:flex; flex-direction:column; gap: 20px; padding: 10px; */
+/*flex: 1 1 auto; min-height: 0; min-width: 0; height:610px; overflow: auto; width: 100%; max-width: 805px; box-sizing: border-box;*/
+/*border: 2px solid white; padding: 10px; height: auto; min-height: 0; overflow: auto; width: 100%; position:relative;*/
+.grid-5 {
+  display: grid;
+  gap: 10px;
+  grid-template-columns: repeat(5, auto);
+  justify-content: flex-start;
+  align-items: center;
+  width: 100%;
+  padding: 10px;
+}
+
+.grid-5-no-pad {
+  display: grid;
+  gap: 10px;
+  grid-template-columns: repeat(5, auto);
+  justify-content: flex-start;
+  align-items: center;
+  width: 100%;
+  padding: 10px;
+  padding: 0;
+}
+
+.grid-2 {
+  display: grid;
+  gap: 10px;
+  grid-template-columns: repeat(2, auto);
+  justify-content: flex-start;
+  align-items: center;
+  width: 100%;
+  padding: 10px;
+}
+
+.underline {
+  text-decoration: underline;
+}
+
+.bold {
+  font-weight: bold;
+}
+
+h1 {
+  text-shadow: -1px -1px 0 black, 1px -1px 0 black, -1px 1px 0 black, 1px 1px 0 black;
+  font-size: 1.5em;
+  text-decoration: underline;
+  font-weight: normal;
+}
+
+h2 {
+  font-size: 1.5em;
+  font-weight: bold;
+}
+
+.slider-container {
+  text-shadow: -1px -1px 0 black, 1px -1px 0 black, -1px 1px 0 black, 1px 1px 0 black;
+  color: white;
+  font-size: 13px;
+  overflow: auto;
+  height: 100%;
+  transition: height 0.5s ease, padding-top 0.5s ease;
+}
+.slider-container .button {
+  background: transparent;
+  border: none;
+  color: white;
+  cursor: pointer;
+}
+
+.slider-container.hidden {
+  height: 0;
+  padding-top: 0;
+  padding-bottom: 0;
+  transition: height 0.5s ease, padding-top 0.25s ease, padding-bottom 0.25s ease;
+}
+
+.slider-section-header {
+  font-size: 1.5em;
+}
+
+.slider-label {
+  font-size: 15px;
+  min-width: 100px;
+  max-width: 250px;
+  width: 250px;
+  cursor: pointer;
+}
+
+.slider-label:hover {
+  text-decoration: underline;
+  font-weight: bold;
+}
+
+.slider {
+  appearance: none;
+  cursor: pointer;
+  width: 100%;
+  min-width: 20px;
+  height: 16px;
+  border-radius: 2px;
+}
+.slider::-webkit-slider-thumb {
+  appearance: none;
+  border-radius: 2px;
+  width: 10px;
+  height: 10px;
+  background: black;
+}
+.slider::-moz-range-thumb {
+  appearance: none;
+  border-radius: 2px;
+  width: 10px;
+  height: 10px;
+  background: black;
+}
+
+.slider:hover::-webkit-slider-thumb {
+  background: #707070;
+}
+.slider:hover::-moz-range-thumb {
+  background: #707070;
+}
+
+#advancedSettingsToggle {
+  padding: 0;
+  gap: 5px;
+}
+
+#advancedSettingsToggle h1 {
+  display: inline-block;
+  margin: 0;
+}
+
+.button {
+  border: none;
+  border-radius: 2px;
+  cursor: pointer;
+  font-size: 20px;
+  line-height: 1.3;
+}
+
+.button:disabled {
+  background: rgb(100, 100, 100);
+  color: white;
+  cursor: not-allowed;
+}
+
+canvas {
+  border: 3px solid black;
+  background: white;
+  border-radius: 2px;
+  cursor: crosshair;
+}
+
+.canvas-container {
+  max-height: 100%;
+  min-height: 0;
+  min-width: 0;
+  overflow: auto;
+  border: 5px solid white;
+  flex: 1;
+}
+
+.canvas-scroll-container {
+  overflow: scroll;
+  position: relative;
+  max-width: 100%;
+  max-height: 100%;
+  min-width: 0;
+  min-height: 0;
+}
+
+.canvas-age-container {
+  position: relative;
+  overflow: hidden;
+  max-width: 100%;
+  max-height: 100%;
+  min-width: 0;
+  min-height: 0;
+}
+
+.canvas-wrapper {
+  width: fit-content;
+  height: fit-content;
+  padding: 0;
+}
+
+.not-allowed-cursor {
+  cursor: not-allowed;
+}
+
+.tooltip {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 2px;
+  background: transparent;
+  border: 2px solid white;
+  border-radius: 10px;
+  min-width: 20px;
+}
+
+.warningBox {
+  max-width: 200px;
+  height: auto;
+  width: auto;
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  background-color: white;
+  color: rgb(255, 0, 0);
+  border: 2px solid black;
+  border-radius: 2px;
+  padding: 10px;
+  z-index: 1000;
+  font-size: 14px;
+  font-weight: bold;
+}
+
+.fade-out {
+  visibility: hidden;
+  opacity: 0;
+  transition: visibility 0s 2s, opacity 2s linear;
+}
+
+.ageCounter {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  color: rgb(211, 0, 0);
+  font-size: 18px;
+  font-weight: bold;
+  width: fit-content;
+  height: auto;
+}
+
+.ageCounter.hidden {
+  display: none;
+}
+
+.info-section {
+  height: 35%;
+  width: 100%;
+  transition: height 1s ease, flex 1s ease;
+}
+
+.info-section.collapsed {
+  height: 70px;
+  transition: height 1s ease, flex 1s ease;
+}
+.info-section.collapsed .info-box-container {
+  height: 50px;
+  width: 140px;
+  transition: height 1s ease, width 1s ease;
+}
+.info-section.collapsed .info-box-content {
+  display: none;
+}
+
+.info-box-container {
+  text-shadow: -1px -1px 0 black, 1px -1px 0 black, -1px 1px 0 black, 1px 1px 0 black;
+  height: 100%;
+  width: 100%;
+  position: relative;
+  border: 2px solid white;
+  color: white;
+  padding: 10px;
+  transition: height 1s ease, width 1s ease;
+}
+
+.info-box-hide-button {
+  position: absolute;
+  top: 7.5px;
+  right: 7.5px;
+  width: 120px;
+  height: 30px;
+  font-size: 1.2em;
+  z-index: 1;
+}
+
+.info-box-content {
+  width: 100%;
+  height: 100%;
+}
+
+.info-box-title {
+  text-align: left;
+  width: 100%;
+}
+
+.info-box {
+  padding: 0;
+  width: 100%;
+  align-items: flex-start;
+}
+
+.info-box.gallery {
+  flex-direction: column;
+}
+
+.info-box-text {
+  font-size: 1.2em;
+  font-weight: bold;
+  flex: 1 1 auto;
+}
+
+.info-box-image-container {
+  flex: 0 0 fit-content;
+  height: fit-content;
+  min-width: 0;
+}
+
+.info-box-image-container.gallery {
+  flex-direction: row;
+  flex-wrap: wrap;
+  width: 100%;
+}
+
+.image-description-container {
+  gap: 5px;
+  width: 250px;
+  height: fit-content;
+}
+
+.info-img {
+  width: 100%;
+  height: auto;
+}
+
+.img-desc {
+  font-size: 0.9em;
+  text-align: left;
+}
+
+.edit-mode-buttons {
+  overflow: auto;
+  gap: 0;
+  transition: gap 0.5s ease;
+  padding: 0;
+}
+
+.edit-mode-buttons.editModeActive {
+  gap: 20px;
+  transition: gap 0.5s ease;
+}
+.edit-mode-buttons.editModeActive #joinPointButton, .edit-mode-buttons.editModeActive #startPointButton {
+  opacity: 1;
+  transform: translateX(0);
+  transition: transform 0.5s ease, opacity 0.5s ease;
+}
+
+#editModeButton {
+  width: 250px;
+  z-index: 10;
+}
+
+.mode-button {
+  opacity: 0;
+  transform: translateX(-100px);
+  transition: transform 0.5s ease, opacity 0.5s ease;
+  font-weight: bold;
+  z-index: 1;
+}
+
+#joinPointButton {
+  color: rgb(0, 0, 255);
+}
+
+#startPointButton {
+  color: rgb(255, 0, 0);
+}
+
+.joinMode #joinPointButton {
+  background-color: rgb(0, 0, 255);
+  color: white;
+}
+
+.startMode #startPointButton {
+  background-color: rgb(255, 0, 0);
+  color: white;
+}
+
+#growLogo {
+  height: 100%;
+}
+
+.presetDropdown {
+  border: none;
+  border-radius: 2px;
+  cursor: pointer;
+  font-size: 20px;
+  line-height: 1.3;
+}
+
+#backgroundCanvas {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1; /* Ensure the canvas is behind other content */
+  visibility: hidden;
+}
+
+#backgroundCanvas.initialized {
+  visibility: visible;
+}
+
+.highlight-red {
+  border: 2px solid red;
+}
+
+.highlight-green {
+  border: 2px solid green;
+}
+
+.highlight-blue {
+  border: 2px solid blue;
+}
+
+.highlight-yellow {
+  border: 2px solid yellow;
+}
+
+.highlight {
+  border: 2px solid var(--highlight-color, red);
+}
+
+.clickable {
+  cursor: pointer;
+}
+
+.clickable:hover {
+  text-decoration: underline;
+  font-weight: bold;
+}
+
+/*# sourceMappingURL=style.css.map */
