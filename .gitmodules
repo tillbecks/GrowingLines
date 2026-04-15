@@ -1,0 +1,3 @@
+[submodule "public/assets/js/libs/handwriting"]
+	path = public/assets/js/libs/handwriting
+	url = https://github.com/tillbecks/handwriting.js.git
