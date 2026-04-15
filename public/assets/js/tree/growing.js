@@ -2,7 +2,7 @@ import * as CD from "../canvas/canvasDrawing.js";
 import * as AGECOUNTER from "../ui/ageCounter.js";
 import * as DRAWING from "../canvas/canvasDrawing.js";
 import {DEBUGMODE} from "../config/appConfig.js";
-import { PRIMARYCOLOR } from "../config/appConfig.js";
+import { PRIMARYCOLOR, SECONDARYCOLOR } from "../config/appConfig.js";
 
 export async function abordGrowing(state){
     if(state.growState.isGrowing){
@@ -25,7 +25,7 @@ export async function growStructs(state){
             const structs = state.strokeState.structs;
 
             CD.redrawStrokes(state.dom.canvas.trace, state.dom.canvasContext);
-            CD.clearCanvas(state.dom.backgroundCanvas.getContext("2d"), PRIMARYCOLOR);
+            CD.clearCanvas(state.dom.backgroundCanvas.getContext("2d"), SECONDARYCOLOR);
 
             
             // Calculate forcefields for all nodes

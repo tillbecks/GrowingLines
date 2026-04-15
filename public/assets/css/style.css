@@ -76,6 +76,7 @@ textarea:not([rows]) {
 :before,
 :after {
   box-sizing: border-box;
+  forced-color-adjust: none;
 }
 
 html, body {
@@ -93,6 +94,7 @@ body {
   flex-direction: column;
   align-items: center;
   font-family: monospace;
+  forced-color-adjust: none;
 }
 
 /*Basic flexbox styles for layout.*/
@@ -370,9 +372,9 @@ h2 {
 
 canvas {
   border: 3px solid black;
-  background: white;
   border-radius: 2px;
   cursor: crosshair;
+  forced-color-adjust: none;
 }
 
 .canvas-container {

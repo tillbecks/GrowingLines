@@ -32,7 +32,7 @@ export function redrawStrokes(strokes, context){
     context.strokeStyle = AC.USERSTROKECOLOR;
     context.lineWidth = AC.USERSTROKEWIDTH;
 
-    clearCanvas(context, AC.SECONDARYCOLOR);
+    clearCanvas(context, AC.PRIMARYCOLOR);
     for(let stroke of strokes){
         context.beginPath();
         context.moveTo(stroke[0][0], stroke[1][0]);

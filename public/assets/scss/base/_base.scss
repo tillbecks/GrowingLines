@@ -3,6 +3,10 @@
 :before,
 :after {
   box-sizing: border-box;
+  forced-color-adjust: none;
+}
+
+html {
 }
 
 html, body{
@@ -22,4 +26,5 @@ body{
     align-items: center;
 
     font-family: $font-main;
+    forced-color-adjust: none;
 }

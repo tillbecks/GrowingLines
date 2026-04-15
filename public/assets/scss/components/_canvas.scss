@@ -2,9 +2,9 @@
 
 canvas{
     border: 3px solid black;
-    background: white;
     border-radius: 2px;
     cursor: crosshair;
+    forced-color-adjust: none;
 }
 
 .canvas-container{
