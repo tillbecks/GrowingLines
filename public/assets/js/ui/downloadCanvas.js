@@ -35,11 +35,20 @@ export function redrawAndDownloadCanvasAsImage(canvas, structs){
     }
     
     // Download
-    const link = document.createElement('a');
-    link.href = tempCanvas.toDataURL('image/png');
     const timestamp = new Date().toISOString().slice(0, 19).replace(/:/g, '-');
-    link.download = `canvas_${timestamp}.png`;
-    link.click();
+    const filename = `canvas_${timestamp}.png`;
+    
+    // Für mobile Geräte: toBlob verwenden
+    tempCanvas.toBlob(function(blob) {
+        const url = URL.createObjectURL(blob);
+        const link = document.createElement('a');
+        link.href = url;
+        link.download = filename;
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+        URL.revokeObjectURL(url);
+    }, 'image/png');
 }
 
 export function getTreeBoundaries(structs){
