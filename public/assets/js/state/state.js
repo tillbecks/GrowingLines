@@ -140,10 +140,26 @@ class State{
 
     reset(level = "canvas") {
         const resetCore = () => {
-            const newState = new State();
-            this.strokeState = newState.strokeState;
-            this.growState = newState.growState;
-            this.editModeState = newState.editModeState
+            this.strokeState = {
+                strokes : [],
+                strokeStarts: [],
+                strokeStartsCache: [],
+                joinPoints: [],
+                structs: [],
+            };
+            this.growState = {
+                abordGrow: false,
+                play: false,
+                isGrowing: false,
+            };
+            this.editModeState = {
+                editMode: false,
+                startPointMode: false,
+                joinPointMode: false,
+                potentialJoinPoints: [],
+                thisJoinPoint: null,
+                thisStartPoint: null,
+            }
             resetForegroundCanvas();
             resetBackgroundCanvas();
         };
