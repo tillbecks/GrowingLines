@@ -52,18 +52,31 @@ function createImageDescription(src, alt="", description){
 
 const infoSection = document.getElementById("infoSection");
 const infoBoxHideButton = document.getElementById("infoBoxHideButton");
+const infoBoxContainer = document.querySelector(".info-box-container");
+
+function updateButtonDimensions(){
+    const width = infoBoxHideButton.offsetWidth;
+    const height = infoBoxHideButton.offsetHeight;
+    infoBoxContainer.style.setProperty('--info-box-button-width', `${width}px`);
+    infoBoxContainer.style.setProperty('--info-box-button-height', `${height}px`);
+}
 
 function toggleInfoBox(show = null){
     if(show == true || infoSection.classList.contains("collapsed")){
         infoSection.classList.remove("collapsed");
-        infoBoxHideButton.value = "hide InfoBox";
+        infoBoxHideButton.value = "Hide Info Box";
     } else {
         infoSection.classList.add("collapsed");
-        infoBoxHideButton.value = "show InfoBox";
+        infoBoxHideButton.value = "Show Info Box";
+        updateButtonDimensions();
     }
 }
 
 document.getElementById("infoBoxHideButton").addEventListener("click", toggleInfoBox);
+
+// Beim initialen Laden die Größe setzen
+window.addEventListener("DOMContentLoaded", updateButtonDimensions);
+window.addEventListener("resize", updateButtonDimensions);
 
 export function addBindingsToInfoBox(){
     bindObjectToInfoBox("growLogo", "growProject");

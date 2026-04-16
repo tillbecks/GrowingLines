@@ -93,7 +93,7 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
-  font-family: monospace;
+  font-family: "Courier New", Courier, monospace;
   forced-color-adjust: none;
 }
 
@@ -504,12 +504,12 @@ canvas {
 }
 
 .info-section.collapsed {
-  height: 70px;
+  height: calc(var(--info-box-button-height, 30px) + 40px);
   transition: height 1s ease, flex 1s ease;
 }
 .info-section.collapsed .info-box-container {
-  height: 50px;
-  width: 140px;
+  height: calc(var(--info-box-button-height, 30px) + 20px);
+  width: calc(var(--info-box-button-width, 120px) + 20px);
   transition: height 1s ease, width 1s ease;
 }
 .info-section.collapsed .info-box-content {
@@ -531,8 +531,8 @@ canvas {
   position: absolute;
   top: 7.5px;
   right: 7.5px;
-  width: 120px;
-  height: 30px;
+  width: fit-content;
+  height: fit-content;
   font-size: 1.2em;
   z-index: 1;
 }
@@ -649,6 +649,11 @@ canvas {
   cursor: pointer;
   font-size: 20px;
   line-height: 1.3;
+  color: black;
+  background: white;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
 }
 
 #backgroundCanvas {

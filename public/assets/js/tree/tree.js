@@ -132,6 +132,17 @@ export class Node {
             descendant.distributeVariable(variableName, variableValue);
         }
     }
+
+    //Function of type function(this, list descendants)
+    foldTree(fn, accumulator){
+        let result = accumulator;
+        if(this.descendants && this.descendants.length > 0){
+            for(let descendant of this.descendants){
+                result = descendant.foldTree(fn, result);
+            }
+        }
+        return fn.apply(this, [result]);
+    }
 }
 
 export class MutatingNode extends Node {

@@ -58,7 +58,7 @@
             <div id="infoSection" class="info-section">
                 <!--div "border: 2px solid white; padding: 10px; height: fit-content; width: fit-content; min-height: 0; overflow: auto; position:relative; color:white;-->
                 <div id="infoBoxContainer" class="info-box-container">
-                    <input id="infoBoxHideButton" type="button" value="hide InfoBox" autocomplete="off" class="button info-box-hide-button">
+                    <input id="infoBoxHideButton" type="button" value="Hide Info Box" autocomplete="off" class="button info-box-hide-button">
                     <div id="infoBoxContent" class="info-box-content">
                         <h1 id = "infoBoxTitle" class="info-box-title">Information</h1>
                         <div id="infoBox" class="info-box">
