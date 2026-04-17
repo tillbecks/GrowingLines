@@ -24,8 +24,6 @@ class State{
             startPointMode: false,
             joinPointMode: false,
             potentialJoinPoints: [],
-            thisJoinPoint: null,
-            thisStartPoint: null,
         }
         
         this.dom = null;
@@ -76,8 +74,6 @@ class State{
             this.editModeState.startPointMode = false;
             this.editModeState.joinPointMode = false;
             this.editModeState.potentialJoinPoints = [];
-            this.editModeState.thisJoinPoint = null;
-            this.editModeState.thisStartPoint = null;
         }
         this.updateStyleModeButtons();
     }
@@ -157,8 +153,8 @@ class State{
                 startPointMode: false,
                 joinPointMode: false,
                 potentialJoinPoints: [],
-                thisJoinPoint: null,
-                thisStartPoint: null,
+                //thisJoinPoint: null,
+                //thisStartPoint: null,
             }
             resetForegroundCanvas();
             resetBackgroundCanvas();

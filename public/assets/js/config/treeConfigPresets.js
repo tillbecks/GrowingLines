@@ -27,8 +27,8 @@ const defaultConfig = {
     minSproutingAge: 25,
 };
 
-const config2 = {
-    name: "Config 2",
+const fishBone = {
+    name: "Fish Bones",
     awayFromCOMInfluence: 0.52,
     breakingOffProb: 0,
     crowdingFactor: 0.9,    
@@ -47,8 +47,8 @@ const config2 = {
     standardSproutAngle: 2.251474735072685
 };
 
-const config3 = {
-    name: "Config 3",
+const humongousTree = {
+    name: "Humongous Tree",
     awayFromCOMInfluence: 0.12,
     breakingOffProb: 0,
     crowdingFactor: 0.9,
@@ -67,8 +67,8 @@ const config3 = {
     standardSproutAngle: 1.5707963267948966,
 }
 
-const bzz1 = {
-    name: "bzzz 1",
+const lightning = {
+    name: "Lightning",
     awayFromCOMInfluence: 0.5,
     breakingOffProb: 0,
     crowdingFactor: 0.9,
@@ -109,5 +109,5 @@ const cityMap = {
 
 
 
-export const treeConfigs = [defaultConfig, config2, config3, bzz1, cityMap];
+export const treeConfigs = [defaultConfig, fishBone, humongousTree, lightning, cityMap];
 export const defaultTreeConfigIndex = 0;

@@ -57,71 +57,82 @@ export function handleMouseMove(event, state) {
     }
 }
 
-function mouseMoveStartPoint(event, state){
-    if(state.editModeState.startPointMode && state.dom.pureCanvas.matches(':hover')){
-        let newStartPoint = null;
-        let onStruct = false;
-        if(state.strokeState.strokes.length > 0){
-            for(let i = 0; i < state.strokeState.strokes.length; i++){
-                let stroke = state.strokeState.strokes[i];
-                for(let j = 0; j < stroke.length; j++){
-                    let point = stroke[j];
-                    if(UTILS.calcDistance(point, [event.offsetX, event.offsetY]) < 6){
-                        onStruct = true;
-                        newStartPoint = {strokeIndex: i, pointIndex: j};
-                        break;
-                    }
+// Berechnet den nächsten StartPoint unter der Maus
+function getStartPointAtPosition(position, state){
+    if(state.strokeState.strokes.length > 0){
+        for(let i = 0; i < state.strokeState.strokes.length; i++){
+            let stroke = state.strokeState.strokes[i];
+            for(let j = 0; j < stroke.length; j++){
+                let point = stroke[j];
+                if(UTILS.calcDistance(point, position) < 6){
+                    return {strokeIndex: i, pointIndex: j};
                 }
             }
         }
-        state.dom.pureCanvas.classList.toggle("not-allowed-cursor", !onStruct);
-        state.editModeState.thisStartPoint = newStartPoint;
+    }
+    return null;
+}
+
+// Berechnet den nächsten JoinPoint unter der Maus
+function getJoinPointAtPosition(position, state){
+    for(let joinPoint of state.editModeState.potentialJoinPoints){
+        if(UTILS.calcDistance(joinPoint.intersection, position) < 10){
+            return joinPoint;
+        }
+    }
+    return null;
+}
+
+function mouseMoveStartPoint(event, state){
+    if(state.editModeState.startPointMode && state.dom.pureCanvas.matches(':hover')){
+        const clickedPoint = getStartPointAtPosition([event.offsetX, event.offsetY], state);
+        state.editModeState.thisStartPoint = clickedPoint;
+        state.dom.pureCanvas.classList.toggle("not-allowed-cursor", !clickedPoint);
     }
 }
 
 function mouseMoveJoinPoint(event, state){
     if(state.editModeState.joinPointMode && state.dom.pureCanvas.matches(':hover')){
-        let newJoinPoint = null;
-        let onJoinPoint = false;
-        for(let joinPoint of state.editModeState.potentialJoinPoints){
-
-            if(UTILS.calcDistance(joinPoint.intersection, [event.offsetX, event.offsetY]) < 10 ){
-                onJoinPoint = true;
-                newJoinPoint = joinPoint;
-                break;
-            }
-        }
-        state.dom.pureCanvas.classList.toggle("not-allowed-cursor", !onJoinPoint);
-        state.editModeState.thisJoinPoint = newJoinPoint;
+        const clickedJoinPoint = getJoinPointAtPosition([event.offsetX, event.offsetY], state);
+        state.editModeState.thisJoinPoint = clickedJoinPoint;
+        state.dom.pureCanvas.classList.toggle("not-allowed-cursor", !clickedJoinPoint);
     }
 }
 
 export function handleMouseDown(event, state) {
     if(state.editModeState.startPointMode){
-        mouseDownStartPoint(state);
+        mouseDownStartPoint(event, state);
     }
     else if(state.editModeState.joinPointMode){
-        mouseDownJoinPoint( state);
+        mouseDownJoinPoint(event, state);
     }
 }
 
-function mouseDownStartPoint(state){
-    if(state.editModeState.startPointMode && state.editModeState.thisStartPoint){
-        JSPA.addStartPoint(state.strokeState.joinPoints, state.strokeState.strokeStarts, state.strokeState.strokeStartsCache, state.editModeState.thisStartPoint.pointIndex, state.editModeState.thisStartPoint.strokeIndex);
-        CANVASDRAWING.drawEditMode(state.dom.canvasContext, state.strokeState.strokes, state.strokeState.strokeStarts, state.strokeState.joinPoints, state.dom.canvas.trace);
+function mouseDownStartPoint(event, state){
+    if(state.editModeState.startPointMode){
+        const clickedPoint = getStartPointAtPosition([event.offsetX, event.offsetY], state);
+        
+        if(clickedPoint){
+            JSPA.addStartPoint(state.strokeState.joinPoints, state.strokeState.strokeStarts, state.strokeState.strokeStartsCache, clickedPoint.pointIndex, clickedPoint.strokeIndex);
+            CANVASDRAWING.drawEditMode(state.dom.canvasContext, state.strokeState.strokes, state.strokeState.strokeStarts, state.strokeState.joinPoints, state.dom.canvas.trace);
+        }
     }
 }
 
-function mouseDownJoinPoint(state){
-    if(state.editModeState.joinPointMode && state.editModeState.thisJoinPoint){
-        let index = JSPA.findUsedJoinPointIndex(state.strokeState.joinPoints, state.editModeState.thisJoinPoint);
-        if(index === -1){
-            JSPA.addJoinPoint(state.strokeState.joinPoints, state.strokeState.strokeStarts, state.strokeState.strokeStartsCache, state.editModeState.thisJoinPoint);
+function mouseDownJoinPoint(event, state){
+    if(state.editModeState.joinPointMode){
+        const clickedJoinPoint = getJoinPointAtPosition([event.offsetX, event.offsetY], state);
+        
+        if(clickedJoinPoint){
+            let index = JSPA.findUsedJoinPointIndex(state.strokeState.joinPoints, clickedJoinPoint);
+            if(index === -1){
+                JSPA.addJoinPoint(state.strokeState.joinPoints, state.strokeState.strokeStarts, state.strokeState.strokeStartsCache, clickedJoinPoint);
+            }
+            else{
+                JSPA.removeJoinPoint(state.strokeState.joinPoints, state.strokeState.strokes, state.strokeState.strokeStarts, state.strokeState.strokeStartsCache, clickedJoinPoint);
+                state.checkStrokeStarts();
+            }
+            CANVASDRAWING.drawEditMode(state.dom.canvasContext, state.strokeState.strokes, state.strokeState.strokeStarts, state.strokeState.joinPoints, state.dom.canvas.trace);
         }
-        else{
-            JSPA.removeJoinPoint(state.strokeState.joinPoints, state.strokeState.strokes, state.strokeState.strokeStarts, state.strokeState.strokeStartsCache, state.editModeState.thisJoinPoint);
-            state.checkStrokeStarts();
-        }
-        CANVASDRAWING.drawEditMode(state.dom.canvasContext, state.strokeState.strokes, state.strokeState.strokeStarts, state.strokeState.joinPoints, state.dom.canvas.trace);
     }
 }
