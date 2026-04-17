@@ -19,8 +19,6 @@ window.addEventListener('resize', () => {
     backgroundCanvas.height = window.innerHeight;
     
     // Reset context properties (they get reset when canvas size changes)
-    backgroundCtx.lineCap = "round";
-    backgroundCtx.lineJoin = "round";
 
     redrawCanvas();
 });
@@ -31,6 +29,8 @@ canvasScrollContainer.addEventListener('scroll', () => {
 
 function redrawCanvas(){
     if(!state.editModeState.editMode){
+        backgroundCtx.lineCap = "round";
+        backgroundCtx.lineJoin = "round";
         backgroundCtx.fillStyle = SECONDARYCOLOR;
         backgroundCtx.fillRect(0, 0, backgroundCanvas.width, backgroundCanvas.height);
 
