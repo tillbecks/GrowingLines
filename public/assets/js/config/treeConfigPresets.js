@@ -107,7 +107,5 @@ const cityMap = {
     standardSproutAngle: 1.4486232791552935
 }
 
-
-
 export const treeConfigs = [defaultConfig, fishBone, bigBranch, lightning, cityMap];
 export const defaultTreeConfigIndex = 0;

@@ -88,3 +88,10 @@ export function linesIntersection(p1, p2, p3, p4, eps = 1e-2) {
 
     return null;
 }
+
+export function highlightTemporary(element, duration = 2000) {
+    element.classList.add('temporary-highlight');
+    setTimeout(() => {
+        element.classList.remove('temporary-highlight');
+    }, duration);
+}

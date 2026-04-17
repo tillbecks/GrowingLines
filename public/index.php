@@ -7,6 +7,11 @@
         <link rel="icon" type="image/x-icon" href="./assets/img/icon.png">
     </head>
     <body>
+        <div class="popup" id ="popup">
+            <div class="popup-content" id="popupContent">
+                <!-- Popup content will be set dynamically by JavaScript -->
+            </div>
+        </div>
         <canvas id="backgroundCanvas"></canvas>
         <div class="main-container">
             <div class="flex-row flex-srink-20-fill">
@@ -41,11 +46,12 @@
                             <input id="resetGrow" type="button" value="Reset Growth"  autocomplete="off" class="button">
                             <input id="stopGrow" type="button" value="&#9654;" autocomplete="off" disabled="true" class="button">
                         </div>
-                        <h1>Presets</h1>
+                        <h1>Growth Presets</h1>
                         <div class="flex-row flex-wrap items-start justify-start">
                             <select class="presetDropdown" name="treeConfig" id="presetSelector">
                                 <!-- Options will be populated by JavaScript -->
                             </select>
+                            <input id="savePreset" type="button" value="Save Preset" autocomplete="off" class="button" disabled="true">
                             <!--input id="loadPreset" type="button" value="Load Preset" autocomplete="off" class="button"-->
                         </div>
                         <div id="advancedSettingsToggle" class="flex-row"> <h1 class="clickable">Advanced Settings</h1><span id="settingsArrow">&#9660;</span></div>

@@ -21,9 +21,7 @@ export async function setEditMode(state){
         state.dom.buttons.editMode.value = "Exit Edit Mode"; 
 
         CANVASDRAWING.drawEditMode(state.dom.canvasContext, state.strokeState.strokes, state.strokeState.strokeStarts, state.strokeState.joinPoints, state.dom.canvas.trace);
-        /*state.dom.buttons.resetButton.disabled = true;
-        state.dom.buttons.growButton.disabled = true;
-        state.dom.buttons.resetGrow.disabled = true;*/
+
         state.dom.buttons.download.disabled = true;
 
         const potentialJoinPoints = JSPA.calculateJoinPoints(state.strokeState.strokes, state.strokeState.strokeStarts);
@@ -39,9 +37,6 @@ export async function setEditMode(state){
 
         CANVASDRAWING.drawStructs(state.dom.canvas.trace, state.strokeState.structs, state.dom.pureCanvas, state.dom.backgroundCanvas);
         
-        /*state.dom.buttons.resetButton.disabled = false;
-        state.dom.buttons.growButton.disabled = false;
-        state.dom.buttons.resetGrow.disabled = false;*/
         state.dom.buttons.download.disabled = false;
         AGECOUNTER.reviveAgeCounter();
     }

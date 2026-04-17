@@ -28,3 +28,16 @@ h2{
 
     font-weight: bold;
 }
+
+.temporary-highlight {
+    animation: highlightRed 2s forwards;
+}
+
+@keyframes highlightRed {
+    0% {
+        color: red;
+    }
+    100% {
+        color: $secondary-color;
+    }
+}

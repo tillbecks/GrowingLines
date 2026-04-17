@@ -46,3 +46,7 @@ export const USERSTROKEWIDTH = 2;
 
 export const DELTAETHRESHOLD = 30;
 
+//Preset config
+
+export const CUSTOMNAME = "Custom";
+

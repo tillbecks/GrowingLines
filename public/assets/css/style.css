@@ -98,7 +98,7 @@ body {
 }
 
 /*Basic flexbox styles for layout.*/
-.flex-row, .edit-mode-buttons, .info-box, #advancedSettingsToggle, .canvas-buttons-section, .canvas-settings-container, .flex-column, .info-section, .info-box-content, .info-box-image-container, .image-description-container, .slider-container, .settings-panel, .canvas-section, .main-container {
+.flex-row, .popup-button-div, .edit-mode-buttons, .info-box, #advancedSettingsToggle, .canvas-buttons-section, .canvas-settings-container, .flex-column, .popup-content-div, .info-section, .info-box-content, .info-box-image-container, .image-description-container, .slider-container, .settings-panel, .canvas-section, .main-container {
   display: flex;
   gap: 20px;
   padding: 10px;
@@ -106,7 +106,7 @@ body {
   align-items: center;
 }
 
-.flex-column, .info-section, .info-box-content, .info-box-image-container, .image-description-container, .slider-container, .settings-panel, .canvas-section, .main-container {
+.flex-column, .popup-content-div, .info-section, .info-box-content, .info-box-image-container, .image-description-container, .slider-container, .settings-panel, .canvas-section, .main-container {
   flex-direction: column;
 }
 
@@ -137,6 +137,10 @@ body {
 
 .justify-between, .canvas-buttons-section, .canvas-settings-container {
   justify-content: space-between;
+}
+
+.justify-around {
+  justify-content: space-around;
 }
 
 /*Utility classes for flexbox sizing:*/
@@ -299,6 +303,18 @@ h2 {
   font-weight: bold;
 }
 
+.temporary-highlight {
+  animation: highlightRed 2s forwards;
+}
+
+@keyframes highlightRed {
+  0% {
+    color: red;
+  }
+  100% {
+    color: black;
+  }
+}
 .slider-container {
   text-shadow: -1px -1px 0 black, 1px -1px 0 black, -1px 1px 0 black, 1px 1px 0 black;
   color: white;
@@ -673,6 +689,62 @@ canvas {
 
 #backgroundCanvas.initialized {
   visibility: visible;
+}
+
+.popup {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.75);
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  display: none;
+}
+
+.popup.active {
+  display: flex;
+}
+
+.popup-content {
+  background: black;
+  color: white;
+  padding: 10px;
+  border-radius: 5px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+  max-width: 90%;
+  max-height: 90%;
+  overflow: auto;
+  font-size: 20px;
+  text-align: center;
+}
+
+.popup-title {
+  font-size: 1.2em;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.popup-button-div {
+  gap: 20px;
+}
+.popup-button-div .button {
+  flex: 1;
+}
+
+.text-input {
+  border: none;
+  border-radius: 2px;
+  font-size: 20px;
+  line-height: 1.3;
+  color: black;
+  background: white;
+  padding: 5px;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
 }
 
 .highlight-red {
