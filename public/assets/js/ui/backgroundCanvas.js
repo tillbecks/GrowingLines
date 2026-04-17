@@ -17,6 +17,10 @@ resizeObserver.observe(infoSection);
 window.addEventListener('resize', () => {
     backgroundCanvas.width = window.innerWidth;
     backgroundCanvas.height = window.innerHeight;
+    
+    // Reset context properties (they get reset when canvas size changes)
+    backgroundCtx.lineCap = "round";
+    backgroundCtx.lineJoin = "round";
 
     redrawCanvas();
 });

@@ -7,6 +7,31 @@
 }
 
 html {
+    // Firefox scrollbar styling (thin, auto-hide, gray)
+    scrollbar-width: thin;
+    scrollbar-color: #888888 transparent;
+    
+    // WebKit scrollbar styling (Chrome, Safari, Edge)
+    &::-webkit-scrollbar {
+        width: 12px;
+        height: 12px;
+    }
+    
+    &::-webkit-scrollbar-track {
+        background: transparent;
+    }
+    
+    &::-webkit-scrollbar-thumb {
+        background: #888888;
+        border-radius: 6px;
+        border: 3px solid transparent;
+        background-clip: content-box;
+        
+        &:hover {
+            background-color: #555555;
+            background-clip: content-box;
+        }
+    }
 }
 
 html, body{
