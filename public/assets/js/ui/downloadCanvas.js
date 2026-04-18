@@ -1,14 +1,15 @@
 import { drawTreeNode } from "../canvas/canvasDrawing.js";
+import { DOWNLOADPADDING } from "../config/appConfig.js";
 
 export function redrawAndDownloadCanvasAsImage(canvas, structs){
     const boundaries = getTreeBoundaries(structs);
 
-    const width = boundaries.maxX - boundaries.minX;
-    const height = boundaries.maxY - boundaries.minY;
-    
+    const width = boundaries.maxX - boundaries.minX + 2 * DOWNLOADPADDING;
+    const height = boundaries.maxY - boundaries.minY + 2 * DOWNLOADPADDING;
+
     // Offsets berechnen um Baum oben links zu positionieren
-    const offsetX = -boundaries.minX;
-    const offsetY = -boundaries.minY;
+    const offsetX = -boundaries.minX + DOWNLOADPADDING;
+    const offsetY = -boundaries.minY + DOWNLOADPADDING;
     
     // Temporärer Canvas nur mit schwarzen Linien
     const tempCanvas = document.createElement('canvas');
@@ -58,10 +59,10 @@ export function getTreeBoundaries(structs){
             const x = this.position[0];
             const y = this.position[1];
             return {
-                minX: Math.min(acc.minX, x),
-                minY: Math.min(acc.minY, y),
-                maxX: Math.max(acc.maxX, x),
-                maxY: Math.max(acc.maxY, y)
+                minX: Math.min(acc.minX, x - this.thickness / 2),
+                minY: Math.min(acc.minY, y - this.thickness / 2),
+                maxX: Math.max(acc.maxX, x + this.thickness / 2),
+                maxY: Math.max(acc.maxY, y + this.thickness / 2)
             };
         }, {minX: Infinity, minY: Infinity, maxX: -Infinity, maxY: -Infinity});
         

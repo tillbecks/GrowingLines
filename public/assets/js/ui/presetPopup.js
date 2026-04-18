@@ -49,12 +49,20 @@ function submitFunction(input){
         return;
     }
     else{
-        const success = saveCustomPreset(name, state.treeConfig);
-        if(success){
-            POPUP.setPopupContent(getSuccesfulSaveContent());
+        if(getCustomPresetNames().includes(name)){
+            POPUP.setPopupContent(getReplaceNameContent(name));
         }else{
-            POPUP.setPopupContent(getReplacePresetContent(name));
+            savePresetWithName(name);
         }
+    }
+}
+
+function savePresetWithName(name){
+    const success = saveCustomPreset(name, state.treeConfig);
+    if(success){
+        POPUP.setPopupContent(getSuccesfulSaveContent());
+    }else{
+        POPUP.setPopupContent(getReplacePresetContent(name, true));
     }
 }
 
@@ -104,17 +112,74 @@ function getErrorContent(errorMessage){
     return container;
 }
 
-function getReplacePresetContent(presetName){
+function getReplaceNameContent(presetName){
+    const title = document.createElement("p");
+    title.textContent = "Preset name already exists";
+    title.classList.add("popup-title");
+
+    const message = document.createElement("p");
+    message.append(
+            "A preset with the name " + presetName + " already exists.",
+            document.createElement("br"),
+            "Do you want to replace it or choose a different name?"
+    );
+    const buttonDiv = document.createElement("div");
+    buttonDiv.classList.add("popup-button-div");
+
+    const replaceButton = document.createElement("button");
+    replaceButton.textContent = "Replace";
+    replaceButton.classList.add("button");
+    replaceButton.addEventListener("click", () => {
+        savePresetWithName(presetName);
+    });
+
+    const renameNameButton = document.createElement("button");
+    renameNameButton.textContent = "Rename";
+    renameNameButton.classList.add("button");
+    renameNameButton.addEventListener("click", () => {
+        POPUP.setPopupContent(getSetNameContent());
+    });
+
+    const cancelButton = document.createElement("button");
+    cancelButton.textContent = "Cancel";
+    cancelButton.classList.add("button");
+    cancelButton.addEventListener("click", () => {
+        POPUP.hidePopup();
+    });
+
+    buttonDiv.appendChild(replaceButton);
+    buttonDiv.appendChild(renameNameButton);
+    buttonDiv.appendChild(cancelButton);
+
+    const container = document.createElement("div");
+    container.classList.add("popup-content-div");
+    container.appendChild(title);
+    container.appendChild(message);
+    container.appendChild(buttonDiv);
+
+    return container;
+}
+
+function getReplacePresetContent(presetName, secondReplaceAttempt = false){
     const title = document.createElement("p");
     title.textContent = "No space left save";
     title.classList.add("popup-title");
 
     const message = document.createElement("p");
-    message.append(
-        "No space left to save the preset.",
-        document.createElement("br"),
-        "You can choose an existing preset to replace:"
-    );
+    if(secondReplaceAttempt){
+        message.append(
+            "Still no space left to save the preset.",
+            document.createElement("br"),
+            "You can choose an existing preset to replace:"
+        );
+    }
+    else{
+        message.append(
+            "No space left to save the preset.",
+            document.createElement("br"),
+            "You can choose an existing preset to replace:"
+        );
+    } 
 
     const presetNames = getCustomPresetNames();
 

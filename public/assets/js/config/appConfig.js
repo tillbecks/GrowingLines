@@ -44,7 +44,7 @@ export const USERSTROKEWIDTH = 2;
 
 //Canvas download config
 
-export const DELTAETHRESHOLD = 30;
+export const DOWNLOADPADDING = 20;
 
 //Preset config
 

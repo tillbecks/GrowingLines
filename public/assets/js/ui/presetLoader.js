@@ -81,6 +81,7 @@ function loadPreset(presetIndex){
 export function setLatestValue(){
     const lastIndex = TCPRESETS.treeConfigs.length + customPresetList.length - 1;
     presetSelector.value = lastIndex;
+    handlePresetChange(lastIndex);
 }
 
 export function setCustomValue(){
