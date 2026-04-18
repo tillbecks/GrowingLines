@@ -75,12 +75,16 @@ function createStructsFromStrokes(strokes, strokeIndex, startPointPosition, join
                 }
                 let joinPointIndex = joinedIndices.indexOf(i);
                 if(joinPointIndex !== -1){
-                    let descendantA = createStructsFromStrokes(strokes, joinedPoints[joinPointIndex].otherStrokeIndex, joinedPoints[joinPointIndex].otherPointIndex-1, joinPoints, config, 1);
-                    let descendantB = createStructsFromStrokes(strokes, joinedPoints[joinPointIndex].otherStrokeIndex, joinedPoints[joinPointIndex].otherPointIndex+1, joinPoints, config, 2);
-                    descendantA.ancestor = lastNode;
-                    descendantB.ancestor = lastNode;
-                    lastNode.descendants.push(descendantA);
-                    lastNode.descendants.push(descendantB);
+                    if(joinedPoints[joinPointIndex].otherPointIndex-1 >= 0){
+                        let descendantA = createStructsFromStrokes(strokes, joinedPoints[joinPointIndex].otherStrokeIndex, joinedPoints[joinPointIndex].otherPointIndex-1, joinPoints, config, 1);
+                        descendantA.ancestor = lastNode;
+                        lastNode.descendants.push(descendantA);
+                    }
+                    if(joinedPoints[joinPointIndex].otherPointIndex+1 < strokes[joinedPoints[joinPointIndex].otherStrokeIndex].length){
+                        let descendantB = createStructsFromStrokes(strokes, joinedPoints[joinPointIndex].otherStrokeIndex, joinedPoints[joinPointIndex].otherPointIndex+1, joinPoints, config, 2);
+                        descendantB.ancestor = lastNode;
+                        lastNode.descendants.push(descendantB);
+                    }
                 }
             }
         }

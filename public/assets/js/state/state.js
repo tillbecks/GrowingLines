@@ -125,6 +125,7 @@ class State{
             if(!POINTACTIONS.hasStartPoint(this.strokeState.strokeStarts, this.strokeState.joinPoints, i)){
                 if(this.strokeState.strokeStartsCache[i] && this.strokeState.strokeStartsCache[i] < this.strokeState.strokes[i].length){
                     this.strokeState.strokeStarts[i] = this.strokeState.strokeStartsCache[i];
+                    // Wenn der aus dem Cache genommen wird muss der auch noch gecheckt werden.
                 }
                 else{
                     this.strokeState.strokeStarts[i] = Math.floor(this.strokeState.strokes[i].length/2);

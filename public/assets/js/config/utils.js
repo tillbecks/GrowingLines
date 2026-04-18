@@ -53,9 +53,31 @@ export function fillInDistantStrokePoints(stroke, dist){
     return stroke;
 }
 
+//Hier direkt StartPoints und startPoints Cache mit berechnen, damit sie auch bei veränderten strokeLength an der gleichen Stelle bleiben
 export function strokePreprocessing(trace, strokeLength){
     trace = trace.map(stroke => transformStrokeToTuples(stroke));
     return trace.map(stroke => fillInDistantStrokePoints(stroke, strokeLength)); 
+}
+
+export function mapStartPointsNewLength(oldStrokes, newStrokes, startPoints){
+    let newStrokeStarts = [];
+    for(let i=0; i<startPoints.length; i++){
+        if(startPoints[i] == null) newStrokeStarts.push(null);
+        else{
+            let pos = oldStrokes[i][startPoints[i]];
+            let closestIndex = 0;
+            let closestDistance = Infinity;
+            for(let j=0; j<newStrokes[i].length; j++){
+                let distance = calcDistance(pos, newStrokes[i][j]);
+                if(distance < closestDistance){
+                    closestDistance = distance;
+                    closestIndex = j;
+                }
+            }
+            newStrokeStarts.push(closestIndex);
+        }
+    }
+    return newStrokeStarts;
 }
 
 export function calcCOMFromPoints(points){

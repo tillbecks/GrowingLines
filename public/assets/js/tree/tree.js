@@ -3,7 +3,8 @@ import { drawTreeNode } from "../canvas/canvasDrawing.js";
 
 export class Node {
     constructor(config, position, ancestor, descendants, centerOfMass = 0){
-        this.config = config;
+        this.config = structuredClone(config);
+        //this.config = config;
 
         this.position = position;
         this.ancestor = ancestor;
@@ -57,8 +58,8 @@ export class Node {
         let dirVec = this.getNormalizedGrowVector();
 
         if(dirVec){
-            let desc_position = [this.position[0] + orthVec[0]*this.sproutingLength, this.position[1] + orthVec[1]*this.sproutingLength];
-            let newDescendant = new MutatingNode(this.config, desc_position, this, [], orthVec, orthVec, this.centerOfMass);
+            let descPosition = [this.position[0] + orthVec[0]*this.sproutingLength, this.position[1] + orthVec[1]*this.sproutingLength];
+            let newDescendant = new MutatingNode(this.config, descPosition, this, [], orthVec, orthVec, this.centerOfMass);
             return newDescendant;
         }
         else{

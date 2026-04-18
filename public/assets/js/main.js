@@ -91,7 +91,10 @@ async function grow(){
     state.reset("grow");
 
     if(state.dom.canvas.hasChanged){
+        const oldStrokes = state.strokeState.strokes;
         state.strokeState.strokes = UTILS.strokePreprocessing(state.dom.canvas.getTrace(), state.treeConfig.sproutingLength);
+        state.strokeState.strokeStarts = UTILS.mapStartPointsNewLength(oldStrokes, state.strokeState.strokes, state.strokeState.strokeStarts);
+        state.strokeState.strokeStartsCache = UTILS.mapStartPointsNewLength(oldStrokes, state.strokeState.strokes, state.strokeState.strokeStartsCache);
         state.checkStrokeStarts();
     }
 
