@@ -12,8 +12,8 @@ export const TREECONFIGVARIABLES = {
     // Sprouting Settings
     minSproutingAge: createVariableObject("Minimum Sprouting Age", 0, 1000, 25, 1, "minSproutingAge"),
     sproutingGrowProb: createVariableObject("Tip Sprouting Probability", 0, 1, 0.2, 0.01, "sproutingGrowProb"),
-    mainSproutingRate: createVariableObject("Lateral Main Sprouting Probability", 0, 0.05, 0.002, 0.0001, "mainSproutingRate"),
-    secondarySproutingRate: createVariableObject("Lateral Secondary Sprouting Probability", 0, 0.05, 0.002, 0.0001, "secondarySproutingRate"),
+    mainSproutingRate: createVariableObject("Main Sprouting Probability", 0, 0.05, 0.002, 0.0001, "mainSproutingRate"),
+    secondarySproutingRate: createVariableObject("Secondary Sprouting Probability", 0, 0.05, 0.002, 0.0001, "secondarySproutingRate"),
     sproutingLength: createVariableObject("Sprout Length", 1, 20, 5, 1, "sproutingLength"),
     breakingOffProb: createVariableObject("Breaking Off Probability", 0, 0.01, 0.001, 0.0001, "breakingOffProb"),
 
