@@ -1,11 +1,15 @@
 import {IMAGEPOSITION, INFORMATIONCONTENT } from "../config/infoContentConfig.js";
 
+/**
+ * Binds an object to the info box for displaying information.
+ * @param {*} objectId 
+ * @param {*} contentObjectKey 
+ */
 export function bindObjectToInfoBox(objectId, contentObjectKey){
     const element = document.getElementById(objectId);
     if(INFORMATIONCONTENT[contentObjectKey]){
         element.addEventListener("click", () => {
             setInfoBoxContent(INFORMATIONCONTENT[contentObjectKey]);
-            //toggleInfoBox(true);
         });
     }
 }
@@ -54,6 +58,9 @@ const infoSection = document.getElementById("infoSection");
 const infoBoxHideButton = document.getElementById("infoBoxHideButton");
 const infoBoxContainer = document.querySelector(".info-box-container");
 
+/**
+ * Sets the dimension of the info box container, so it can contain the absolute positioned hide button when the info box is collapsed.
+ */
 function updateButtonDimensions(){
     const width = infoBoxHideButton.offsetWidth;
     const height = infoBoxHideButton.offsetHeight;
@@ -83,4 +90,7 @@ export function addBindingsToInfoBox(){
     bindObjectToInfoBox("editModeButton", "editMode");
     bindObjectToInfoBox("startPointButton", "startPointMode");
     bindObjectToInfoBox("joinPointButton", "joinPointMode");
+    bindObjectToInfoBox("advancedSettingsToggle", "advancedSettings");
+    bindObjectToInfoBox("controlsHeading", "controls");
+    bindObjectToInfoBox("presetsHeading", "growthPresets");
 }

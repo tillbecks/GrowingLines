@@ -1,4 +1,3 @@
-import * as UTILS from "./config/utils.js";
 import * as GROWING from "./tree/growing.js";
 import * as SB from "./tree/structBuilder.js";
 import * as CD from "./canvas/canvasDrawing.js";
@@ -33,7 +32,7 @@ state.dom.buttons.stopGrow.addEventListener("click", ()=>{state.setPlay();});
 state.dom.buttons.editMode.addEventListener("click", ()=>{EDITMODE.setEditMode(state);});
 state.dom.buttons.startPoint.addEventListener("click", ()=>{state.setStartPointModus();});
 state.dom.buttons.joinPoint.addEventListener("click", ()=>{state.setJoinPointModus();});
-state.dom.buttons.download.addEventListener("click", ()=>{redrawAndDownloadCanvasAsImage(state.dom.pureCanvas, state.strokeState.structs);});
+state.dom.buttons.download.addEventListener("click", ()=>{redrawAndDownloadCanvasAsImage(state.strokeState.structs);});
 
 document.onmousemove = handleMouseMove;
 document.onmousedown = handleMouseDown;
@@ -90,8 +89,8 @@ async function grow(){
     await GROWING.abordGrowing(state);
     state.reset("grow");
     
-    state.checkStrokeStarts();
-    
+    state.cleanUpStartAndJoinPoints();
+    state.checkStrokeStart();    
 
     state.strokeState.structs = SB.createStructRootsFromStrokes(state.strokeState.strokes, state.strokeState.strokeStarts, state.strokeState.joinPoints, state.treeConfig);
      

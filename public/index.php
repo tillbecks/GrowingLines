@@ -39,14 +39,14 @@
                         </div>
                     </div>
                     <div class="settings-panel">
-                        <h1>Controls</h1>
+                        <h1 id="controlsHeading" class="clickable">Controls</h1>
                         <div class="grid-2 flex-no-shrink-fill">
                             <input id="resetButton" type="button" value="Erase Canvas" autocomplete="off" class="button">
                             <input id="growButton" type="button" value="Start Growth" autocomplete="off" class="button">
                             <input id="resetGrow" type="button" value="Reset Growth"  autocomplete="off" class="button">
                             <input id="stopGrow" type="button" value="&#9654;" autocomplete="off" disabled="true" class="button">
                         </div>
-                        <h1>Growth Presets</h1>
+                        <h1 id="presetsHeading" class="clickable">Growth Presets</h1>
                         <div class="flex-row flex-wrap items-start justify-start">
                             <select class="presetDropdown" name="treeConfig" id="presetSelector">
                                 <!-- Options will be populated by JavaScript -->

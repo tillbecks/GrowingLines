@@ -1,3 +1,15 @@
+/**
+ * Helper function to create a variable object for slider configuration
+ * @param {string} label
+ * @param {number} min 
+ * @param {number} max 
+ * @param {number} defaultValue 
+ * @param {number} step 
+ * @param {string} description 
+ * @param {function} func - Function to transform the slider value before applying it to the tree (e.g. converting degrees to radians)
+ * @param {function} inverseFunc - Function to transform the tree variable value back to slider value for display (e.g. converting radians back to degrees)
+ * @returns 
+ */
 function createVariableObject(label, min, max, defaultValue, step, description = null, func = x => x, inverseFunc = x => x){
     return { label: label, min: min, max: max, defaultValue: defaultValue, step: step, func: func, inverseFunc: inverseFunc, description: description };
 }

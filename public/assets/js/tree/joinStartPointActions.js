@@ -2,6 +2,8 @@ import * as UTILS from "../config/utils.js";
 import canvasWarning from "../canvas/canvasWarning.js";
 import { WARNINGMESSAGES } from "../config/appConfig.js";
 
+//joinPoint object: {strokeA, pointAIndex, strokeB, pointBIndex, intersection}
+
 /**
  * Finds the index of a join point in the joinPoints array that is close to the given joinPoint's intersection.
  * @param {Array} joinPoints array of join point objects with properties: strokeA, pointAIndex, strokeB, pointBIndex, intersection
@@ -156,6 +158,69 @@ export function calculateJoinPoints(strokes, strokeStarts){
         }
     }
     return potentialJoinPoints;
+}
+
+/**
+ * Maps old start point indices to new stroke indices based on their positions.
+ * @param {Array} oldStrokes array of old strokes
+ * @param {Array} newStrokes array of new strokes
+ * @param {Array} startPoints array of start point indices
+ * @returns {Array} array of new start point indices
+ */
+export function mapStartPointsNewLength(oldStrokes, newStrokes, startPoints){
+    let newStrokeStarts = [];
+    for(let i=0; i<startPoints.length; i++){
+        if(startPoints[i] == null) newStrokeStarts.push(null);
+        else{
+            let pos = oldStrokes[i][startPoints[i]];
+            let closestIndex = 0;
+            let closestDistance = Infinity;
+            for(let j=0; j<newStrokes[i].length; j++){
+                let distance = UTILS.calcDistance(pos, newStrokes[i][j]);
+                if(distance < closestDistance){
+                    closestDistance = distance;
+                    closestIndex = j;
+                }
+            }
+            newStrokeStarts.push(closestIndex);
+        }
+    }
+    return newStrokeStarts;
+}
+
+/**
+ * Maps old join point indices to new stroke indices based on their positions.
+ * @param {Array} oldStrokes array of old strokes
+ * @param {Array} newStrokes array of new strokes
+ * @param {Array} joinPoints array of join point objects
+ * @returns {Array} array of new join point objects
+ */
+
+export function mapJoinPointsNewLength(oldStrokes, newStrokes, joinPoints){
+    let newJoinPoints = [];
+    for(let i=0; i<joinPoints.length; i++){
+        let pos = joinPoints[i].intersection;
+        let closestIndexA = 0;
+        let closestDistanceA = Infinity;
+        for(let j=0; j<newStrokes[joinPoints[i].strokeA].length; j++){
+            let distance = UTILS.calcDistance(pos, newStrokes[joinPoints[i].strokeA][j]);
+            if(distance < closestDistanceA){
+                closestDistanceA = distance;
+                closestIndexA = j;
+            }
+        }
+        let closestIndexB = 0;
+        let closestDistanceB = Infinity;
+        for(let j=0; j<newStrokes[joinPoints[i].strokeB].length; j++){
+            let distance = UTILS.calcDistance(pos, newStrokes[joinPoints[i].strokeB][j]);
+            if(distance < closestDistanceB){
+                closestDistanceB = distance;
+                closestIndexB = j;
+            }
+        }
+        newJoinPoints.push({strokeA: joinPoints[i].strokeA, pointAIndex: closestIndexA, strokeB: joinPoints[i].strokeB, pointBIndex: closestIndexB, intersection: pos});
+    }
+    return newJoinPoints;
 }
 
 /** 

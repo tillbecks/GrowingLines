@@ -12,6 +12,7 @@ export const PROXIMITYTHRESHOLD = 10;
 export const STARTPOINTCOLOR = "rgba(255, 0, 0, 0.5)";
 export const JOINPOINTCOLOR = "rgba(28, 28, 207, 0.5)";
 export const POINTRADIUS = 5;
+export const MINIMUMDISTANCEMOUSETOPOINT = 6;
 
 //Debug config
 
@@ -27,6 +28,7 @@ export const HIDEADVANCEDSETTINGSONINIT = true;
 //Warning messages config
 
 export const WARNINGDISPLAYTIME = 2000;
+export const WARNINGREMOVETIME = 500;
 
 export const WARNINGMESSAGES = {
     "cycleJoin": "Unallowed operation: Joining these points would create a cycle.",

@@ -1,17 +1,22 @@
 import { drawTreeNode } from "../canvas/canvasDrawing.js";
 import { DOWNLOADPADDING } from "../config/appConfig.js";
 
-export function redrawAndDownloadCanvasAsImage(canvas, structs){
+/**
+ * Redraws the tree structures on a temporary canvas and triggers a download of the canvas content as an image file.
+ * @param {*} structs 
+ */
+export function redrawAndDownloadCanvasAsImage( structs){
+
+    // Calculate the boundaries of the tree to determine the size of the temporary canvas
     const boundaries = getTreeBoundaries(structs);
 
     const width = boundaries.maxX - boundaries.minX + 2 * DOWNLOADPADDING;
     const height = boundaries.maxY - boundaries.minY + 2 * DOWNLOADPADDING;
 
-    // Offsets berechnen um Baum oben links zu positionieren
     const offsetX = -boundaries.minX + DOWNLOADPADDING;
     const offsetY = -boundaries.minY + DOWNLOADPADDING;
     
-    // Temporärer Canvas nur mit schwarzen Linien
+    // Create a temporary canvas to draw the tree structures
     const tempCanvas = document.createElement('canvas');
     tempCanvas.width = width;
     tempCanvas.height = height;
@@ -19,9 +24,8 @@ export function redrawAndDownloadCanvasAsImage(canvas, structs){
     context.lineCap = "round";
     context.lineJoin = "round";
     
-    // NUR die schwarzen Baum-Linien zeichnen (keine User-Strokes!)
     if (structs.length > 0) {
-        // Structs zeichnen mit Offsets
+        //Draw tree structures on the temporary canvas, applying the calculated offsets to position them correctly
         for (let node of structs) {
             node.foldTree(function() {
                 if(this.ancestor != null && this.age > 0){
@@ -39,7 +43,7 @@ export function redrawAndDownloadCanvasAsImage(canvas, structs){
     const timestamp = new Date().toISOString().slice(0, 19).replace(/:/g, '-');
     const filename = `canvas_${timestamp}.png`;
     
-    // Für mobile Geräte: toBlob verwenden
+    // toBlob is mobile friendly
     tempCanvas.toBlob(function(blob) {
         const url = URL.createObjectURL(blob);
         const link = document.createElement('a');
@@ -52,8 +56,15 @@ export function redrawAndDownloadCanvasAsImage(canvas, structs){
     }, 'image/png');
 }
 
+/**
+ * Calculates the boundaries of the tree structures to determine the size of the temporary canvas for downloading.
+ * @param {*} structs 
+ * @returns 
+ */
 export function getTreeBoundaries(structs){
     let minX = Infinity, minY = Infinity, maxX = -Infinity, maxY = -Infinity;
+
+    // Iterates through all nodes in the tree structures and calculates the minimum and maximum x and y coordinates.
     for (let node of structs) {
         const boundaries = node.foldTree(function(acc) {
             const x = this.position[0];

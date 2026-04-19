@@ -6,11 +6,12 @@ const backgroundCtx = backgroundCanvas.getContext('2d');
 const canvasScrollContainer = document.getElementById('canvasScrollContainer');
 const infoSection = document.getElementById('infoSection');
 
-// Wenn sich die Position/Größe der Info-Section ändert (durch hidden class toggle)
+
 const resizeObserver = new ResizeObserver(() => {
     redrawCanvas();
 });
 
+//Observe the info section for size changes to adjust the canvas size accordingly
 resizeObserver.observe(infoSection);
 
 //on window resize, adjust canvas size and redraw background

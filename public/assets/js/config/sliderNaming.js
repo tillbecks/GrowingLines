@@ -1,3 +1,5 @@
+// This module provides utility functions for generating consistent element IDs for sliders and their associated labels, values, and buttons.  
+
 export function sliderName(id){
     return `${id}Slider`;
 }
