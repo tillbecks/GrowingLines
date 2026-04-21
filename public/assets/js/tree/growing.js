@@ -1,8 +1,8 @@
 import * as CD from "../canvas/canvasDrawing.js";
 import * as AGECOUNTER from "../ui/ageCounter.js";
 import * as DRAWING from "../canvas/canvasDrawing.js";
+import dom from "../state/domState.js";
 import {DEBUGMODE} from "../config/appConfig.js";
-import { SECONDARYCOLOR } from "../config/appConfig.js";
 
 /**
  * Aborts the growing process for the given state. Sets the abort flag and waits until the growing process has fully stopped before resolving.
@@ -27,8 +27,8 @@ export async function growStructs(state){
         // The play variable is used to pause and resume the growing process.
 
         //Prepare variables and UI elements for main growing loop
-        state.dom.buttons.stopGrow.disabled = false;
-        state.dom.canvas.deactivate();
+        dom.buttons.stopGrow.disabled = false;
+        dom.canvas.deactivate();
         let oneStillGrowing = true;
         state.growState.isGrowing = true;
         state.setPlay(true);
@@ -38,8 +38,8 @@ export async function growStructs(state){
             oneStillGrowing = false;
             const structs = state.strokeState.structs;
 
-            CD.redrawStrokes(state.dom.canvas.trace, state.dom.canvasContext);
-            CD.clearCanvas(state.dom.backgroundCanvas.getContext("2d"), SECONDARYCOLOR);
+            CD.redrawStrokes(dom.canvas.trace, dom.canvasContext);
+            dom.resetBackgroundCanvas();
             
             // Calculate forcefields for all structs
             const forceFields = [];
@@ -48,7 +48,7 @@ export async function growStructs(state){
             }
 
             // If in debug mode, draw the force fields and COMs for all structs
-            if(DEBUGMODE == true){DRAWING.drawDebugInfo(state.dom.canvasContext, structs, state.treeConfig.crowdingMinDist, forceFields);}
+            if(DEBUGMODE == true){DRAWING.drawDebugInfo(dom.canvasContext, structs, state.treeConfig.crowdingMinDist, forceFields);}
             
             // Grow and draw all structs, passing the force fields of the other structs to each struct to allow them to react to each other
             for(let i = 0; i < structs.length; i++){
@@ -59,7 +59,7 @@ export async function growStructs(state){
                     }               
                 }
                 oneStillGrowing = structs[i].grow(otherForceFields) || oneStillGrowing;
-                structs[i].draw(state.dom.pureCanvas, state.dom.backgroundCanvas);
+                structs[i].draw(dom.pureCanvas, dom.backgroundCanvas);
             }
 
             //Update age counter display
@@ -72,8 +72,8 @@ export async function growStructs(state){
         state.growState.abordGrow = false;
         state.setPlay(false);
         state.growState.isGrowing = false;
-        state.dom.buttons.stopGrow.disabled = true;
-        state.dom.canvas.activate();
+        dom.buttons.stopGrow.disabled = true;
+        dom.canvas.activate();
     }
 }
 

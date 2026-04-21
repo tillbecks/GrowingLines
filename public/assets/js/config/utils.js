@@ -154,3 +154,24 @@ export function highlightTemporary(element, duration = 2000) {
         element.classList.remove('temporary-highlight');
     }, duration);
 }
+
+/**
+ * Resizes a trace to fit within a target canvas dimensions
+ * @param {*} traces 
+ * @param {*} nowCanvasWidth 
+ * @param {*} nowCanvasHeight 
+ * @param {*} targetCanvasWidth 
+ * @param {*} targetCanvasHeight 
+ * @returns 
+ */
+export function resizeTraceToCanvas(traces, nowCanvasWidth, nowCanvasHeight, targetCanvasWidth, targetCanvasHeight){
+    let widthRatio = targetCanvasWidth / nowCanvasWidth;
+    let heightRatio = targetCanvasHeight / nowCanvasHeight;
+
+    //Trace has Structure [[x1, x2, ...], [y1, y2, ...], []]
+    return traces.map(trace => {
+        let newX = trace[0].map(x => x * widthRatio);
+        let newY = trace[1].map(y => y * heightRatio);
+        return [newX, newY, trace[2]];
+    });
+}

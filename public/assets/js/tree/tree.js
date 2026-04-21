@@ -7,6 +7,9 @@ import { drawTreeNode } from "../canvas/canvasDrawing.js";
 
 export class Node {
     constructor(config, position, ancestor, descendants, centerOfMass = 0){
+        if(position[0] == null || position[1] == null){
+            console.log("Position should be an array of [x, y], but got:", position);
+        }
         this.config = structuredClone(config);
         //this.config = config;
 

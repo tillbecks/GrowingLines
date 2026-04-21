@@ -1,10 +1,6 @@
 import { SECONDARYCOLOR } from "../config/appConfig.js";
 import state from "../state/state.js";
-
-const backgroundCanvas = document.getElementById('backgroundCanvas');
-const backgroundCtx = backgroundCanvas.getContext('2d');
-const canvasScrollContainer = document.getElementById('canvasScrollContainer');
-const infoSection = document.getElementById('infoSection');
+import dom from "../state/domState.js";
 
 
 const resizeObserver = new ResizeObserver(() => {
@@ -12,43 +8,43 @@ const resizeObserver = new ResizeObserver(() => {
 });
 
 //Observe the info section for size changes to adjust the canvas size accordingly
-resizeObserver.observe(infoSection);
+resizeObserver.observe(dom.infoSection);
 
 //on window resize, adjust canvas size and redraw background
 window.addEventListener('resize', () => {
-    backgroundCanvas.width = window.innerWidth;
-    backgroundCanvas.height = window.innerHeight;
+    dom.backgroundCanvas.width = window.innerWidth;
+    dom.backgroundCanvas.height = window.innerHeight;
     
     // Reset context properties (they get reset when canvas size changes)
 
     redrawCanvas();
 });
 
-canvasScrollContainer.addEventListener('scroll', () => {
+dom.canvasScrollContainer.addEventListener('scroll', () => {
     redrawCanvas();
 });
 
 function redrawCanvas(){
     if(!state.editModeState.editMode){
-        backgroundCtx.lineCap = "round";
-        backgroundCtx.lineJoin = "round";
-        backgroundCtx.fillStyle = SECONDARYCOLOR;
-        backgroundCtx.fillRect(0, 0, backgroundCanvas.width, backgroundCanvas.height);
+        dom.backgroundCanvasContext.lineCap = "round";
+        dom.backgroundCanvasContext.lineJoin = "round";
+        dom.backgroundCanvasContext.fillStyle = SECONDARYCOLOR;
+        dom.backgroundCanvasContext.fillRect(0, 0, dom.backgroundCanvas.width, dom.backgroundCanvas.height);
 
         for(let node of state.strokeState.structs){
-            node.draw(state.dom.pureCanvas, state.dom.backgroundCanvas);
+            node.draw(dom.pureCanvas, dom.backgroundCanvas);
         }
     }
 }   
 
 export function initCanvas(){
-    backgroundCanvas.width = window.innerWidth;
-    backgroundCanvas.height = window.innerHeight;
+    dom.backgroundCanvas.width = window.innerWidth;
+    dom.backgroundCanvas.height = window.innerHeight;
     
-    backgroundCtx.lineCap = "round";
-    backgroundCtx.lineJoin = "round";
-    backgroundCtx.fillStyle = SECONDARYCOLOR;
-    backgroundCtx.fillRect(0, 0, backgroundCanvas.width, backgroundCanvas.height);
+    dom.backgroundCanvasContext.lineCap = "round";
+    dom.backgroundCanvasContext.lineJoin = "round";
+    dom.backgroundCanvasContext.fillStyle = SECONDARYCOLOR;
+    dom.backgroundCanvasContext.fillRect(0, 0, dom.backgroundCanvas.width, dom.backgroundCanvas.height);
 
-    backgroundCanvas.classList.add("initialized");
+    dom.backgroundCanvas.classList.add("initialized");
 }

@@ -1,4 +1,5 @@
 import { PROXIMITYTHRESHOLD } from "../config/appConfig.js";
+import dom from "../state/domState.js";
 
 export const ageCounter = document.createElement("div");
 ageCounter.classList.add('ageCounter');
@@ -10,9 +11,6 @@ let ageCounterMax = 0;
 let lastRect = null;
 
 export function spawnCounter(maxAge = 0){
-    //const canvasSection = document.getElementById("canvasSection");
-    const canvasSection = document.getElementById("canvasAgeContainer");
-    
     ageCounterLast = 0;
     ageCounterMax = maxAge;
 
@@ -21,7 +19,7 @@ export function spawnCounter(maxAge = 0){
     // Hide ageCounter when clicked
     ageCounter.addEventListener("mousedown", hideAgeCounter);
     
-    if(canvasSection && !canvasSection.contains(ageCounter)) canvasSection.appendChild(ageCounter);
+    if(dom.canvasAgeSection && !dom.canvasAgeSection.contains(ageCounter)) dom.canvasAgeSection.appendChild(ageCounter);
 }
 
 export function softHideAgeCounter(){

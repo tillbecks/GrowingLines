@@ -1,28 +1,26 @@
 import {HIDEADVANCEDSETTINGSONINIT} from '../config/appConfig.js';
+import dom from '../state/domState.js';
 
 //Toggle Advanced Settings visibility
-const advancedSettingsToggle = document.getElementById('advancedSettingsToggle');
-const advancedSettingsContainer = document.getElementById('advancedSettingsContainer');
-const settingsArrow = document.getElementById('settingsArrow');
 
 export function init(){
     if(HIDEADVANCEDSETTINGSONINIT){
-        advancedSettingsContainer.classList.add('hidden');
+        dom.advancedSettingsContainer.classList.add('hidden');
     }
     setSettingsArrows();
 }
 
-advancedSettingsToggle.addEventListener('click', () => {
-    const isHidden = advancedSettingsContainer.classList.contains('hidden');
+dom.advancedSettingsToggle.addEventListener('click', () => {
+    const isHidden = dom.advancedSettingsContainer.classList.contains('hidden');
     if (isHidden) {
-        advancedSettingsContainer.classList.remove('hidden');
+        dom.advancedSettingsContainer.classList.remove('hidden');
     } else {
-        advancedSettingsContainer.classList.add('hidden');
+        dom.advancedSettingsContainer.classList.add('hidden');
     }
     setSettingsArrows();
 });
 
 function setSettingsArrows(){
-    const isHidden = advancedSettingsContainer.classList.contains('hidden');
-    settingsArrow.textContent = isHidden ? '\u25BC' : '\u25B2';
+    const isHidden = dom.advancedSettingsContainer.classList.contains('hidden');
+    dom.settingsArrow.textContent = isHidden ? '\u25BC' : '\u25B2';
 }

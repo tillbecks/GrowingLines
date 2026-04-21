@@ -2,12 +2,13 @@ import * as INFOBOX from "./infoBox.js";
 import * as SLIDERUPDATES from "./sliderUpdates.js";
 import { TREECONFIGVARIABLES, SLIDERSECTIONS } from "../config/sliderConfig.js";
 import * as SLIDERNAMING from "../config/sliderNaming.js";
+import dom from "../state/domState.js";
 
 function createSlider(id, config, container) {
     const { label, min, max, defaultValue, step, description, func,} = config;
 
     // Label
-    const labelEl = document.createElement("p");
+    const labelEl = dom.createElement("p");
     labelEl.id = SLIDERNAMING.labelName(id);
     labelEl.className = "slider-label";
     labelEl.textContent = label;
@@ -15,7 +16,7 @@ function createSlider(id, config, container) {
     INFOBOX.bindObjectToInfoBox(labelEl.id, description);
     
     // Decrement Button
-    const decrBtn = document.createElement("input");
+    const decrBtn = dom.createElement("input");
     decrBtn.type = "button";
     decrBtn.id = SLIDERNAMING.decrButtonName(id);
     decrBtn.className = "button font-bold";
@@ -23,7 +24,7 @@ function createSlider(id, config, container) {
     container.appendChild(decrBtn);
     
     // Slider
-    const slider = document.createElement("input");
+    const slider = dom.createElement("input");
     slider.type = "range";
     slider.id = SLIDERNAMING.sliderName(id);
     slider.min = min;
@@ -35,7 +36,7 @@ function createSlider(id, config, container) {
     container.appendChild(slider);
     
     // Increment Button
-    const incrBtn = document.createElement("input");
+    const incrBtn = dom.createElement("input");
     incrBtn.type = "button";
     incrBtn.id = SLIDERNAMING.incrButtonName(id);
     incrBtn.className = "button font-bold";
@@ -43,7 +44,7 @@ function createSlider(id, config, container) {
     container.appendChild(incrBtn);
     
     // Value Display
-    const valueSpan = document.createElement("span");
+    const valueSpan = dom.createElement("span");
     valueSpan.id = SLIDERNAMING.valueName(id);
     valueSpan.className = "font-bold";
     valueSpan.textContent = defaultValue;
@@ -57,14 +58,14 @@ function createSlider(id, config, container) {
 function createSynchronizer(config, container){
     const { label, main, secondary, description } = config;
 
-    const labelSync = document.createElement("p");
+    const labelSync = dom.createElement("p");
     labelSync.id = SLIDERNAMING.synchronizerLabelName(main, secondary);
     labelSync.className = "slider-label";
     labelSync.textContent = label;
     container.appendChild(labelSync);
     INFOBOX.bindObjectToInfoBox(labelSync.id, description);
 
-    const checkbox = document.createElement("input");
+    const checkbox = dom.createElement("input");
     checkbox.type = "checkbox";
     checkbox.id = SLIDERNAMING.synchronizerCheckboxName(main, secondary);
     checkbox.className = "sync-checkbox";
@@ -73,22 +74,22 @@ function createSynchronizer(config, container){
     container.appendChild(checkbox);
 
     for(let i = 0; i < 3; i++){
-        const emptyDiv = document.createElement("div");
+        const emptyDiv = dom.createElement("div");
         container.appendChild(emptyDiv);
     }
 }
 
 export function createSliderSection(){
-    const advSettingsContainer = document.getElementById("advancedSettingsContainer");
+    const advSettingsContainer = dom.getElementById("advancedSettingsContainer");
 
     for(const section in SLIDERSECTIONS){
 
-        const title = document.createElement("h1");
+        const title = dom.createElement("h1");
         title.className = "slider-section-header";
         title.textContent = SLIDERSECTIONS[section].title;
         advSettingsContainer.appendChild(title);
 
-        const sectionContainer = document.createElement("div");
+        const sectionContainer = dom.createElement("div");
         sectionContainer.className = "grid-5-no-pad";
         advSettingsContainer.appendChild(sectionContainer);
 

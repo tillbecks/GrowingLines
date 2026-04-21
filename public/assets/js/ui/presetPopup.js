@@ -3,28 +3,29 @@ import * as POPUP from "./popup.js";
 import { highlightTemporary } from "../config/utils.js";
 import state from "../state/state.js";
 import { reloadPresetSelector, setLatestValue } from "./presetLoader.js";
+import dom from "../state/domState.js";
 
 function getSetNameContent(){
-    const title = document.createElement("p");
+    const title = dom.createElement("p");
     title.textContent = "Give your preset a name";
     title.classList.add("popup-title");
 
-    const nameInput = document.createElement("input");
+    const nameInput = dom.createElement("input");
     nameInput.type = "text";
     nameInput.placeholder = "Enter preset name";
     nameInput.classList.add("text-input");
 
-    const buttonDiv = document.createElement("div");
+    const buttonDiv = dom.createElement("div");
     buttonDiv.classList.add("popup-button-div");
 
-    const submitButton = document.createElement("button");
+    const submitButton = dom.createElement("button");
     submitButton.textContent = "Save";
     submitButton.classList.add("button");
     submitButton.addEventListener("click", () => {
         submitFunction(nameInput);
     });
 
-    const cancelButton = document.createElement("button");
+    const cancelButton = dom.createElement("button");
     cancelButton.textContent = "Cancel";
     cancelButton.classList.add("button");
     cancelButton.addEventListener("click", () => {
@@ -34,7 +35,7 @@ function getSetNameContent(){
     buttonDiv.appendChild(submitButton);
     buttonDiv.appendChild(cancelButton);
 
-    const container = document.createElement("div");
+    const container = dom.createElement("div");
     container.classList.add("popup-content-div");
     container.appendChild(title);
     container.appendChild(nameInput);
@@ -67,11 +68,11 @@ function savePresetWithName(name){
 }
 
 function getSuccesfulSaveContent(){
-    const title = document.createElement("p");
+    const title = dom.createElement("p");
     title.textContent = "Preset saved successfully!";
     title.classList.add("popup-title");
 
-    const okButton = document.createElement("button");
+    const okButton = dom.createElement("button");
     okButton.textContent = "OK";
     okButton.classList.add("button");
     okButton.addEventListener("click", () => {
@@ -80,7 +81,7 @@ function getSuccesfulSaveContent(){
         setLatestValue();
     });
 
-    const container = document.createElement("div");
+    const container = dom.createElement("div");
     container.classList.add("popup-content-div");
     container.appendChild(title);
     container.appendChild(okButton);
@@ -89,21 +90,21 @@ function getSuccesfulSaveContent(){
 }
 
 function getErrorContent(errorMessage){
-    const title = document.createElement("p");
+    const title = dom.createElement("p");
     title.textContent = "Error";
     title.classList.add("popup-title");
 
-    const message = document.createElement("p");
+    const message = dom.createElement("p");
     message.textContent = "Error: " + errorMessage;
 
-    const okButton = document.createElement("button");
+    const okButton = dom.createElement("button");
     okButton.textContent = "OK";
     okButton.classList.add("button");
     okButton.addEventListener("click", () => {
         POPUP.hidePopup();
     });
 
-    const container = document.createElement("div");
+    const container = dom.createElement("div");
     container.classList.add("popup-content-div");
     container.appendChild(title);
     container.appendChild(message);
@@ -113,34 +114,34 @@ function getErrorContent(errorMessage){
 }
 
 function getReplaceNameContent(presetName){
-    const title = document.createElement("p");
+    const title = dom.createElement("p");
     title.textContent = "Preset name already exists";
     title.classList.add("popup-title");
 
-    const message = document.createElement("p");
+    const message = dom.createElement("p");
     message.append(
             "A preset with the name " + presetName + " already exists.",
-            document.createElement("br"),
+            dom.createElement("br"),
             "Do you want to replace it or choose a different name?"
     );
-    const buttonDiv = document.createElement("div");
+    const buttonDiv = dom.createElement("div");
     buttonDiv.classList.add("popup-button-div");
 
-    const replaceButton = document.createElement("button");
+    const replaceButton = dom.createElement("button");
     replaceButton.textContent = "Replace";
     replaceButton.classList.add("button");
     replaceButton.addEventListener("click", () => {
         savePresetWithName(presetName);
     });
 
-    const renameNameButton = document.createElement("button");
+    const renameNameButton = dom.createElement("button");
     renameNameButton.textContent = "Rename";
     renameNameButton.classList.add("button");
     renameNameButton.addEventListener("click", () => {
         POPUP.setPopupContent(getSetNameContent());
     });
 
-    const cancelButton = document.createElement("button");
+    const cancelButton = dom.createElement("button");
     cancelButton.textContent = "Cancel";
     cancelButton.classList.add("button");
     cancelButton.addEventListener("click", () => {
@@ -151,7 +152,7 @@ function getReplaceNameContent(presetName){
     buttonDiv.appendChild(renameNameButton);
     buttonDiv.appendChild(cancelButton);
 
-    const container = document.createElement("div");
+    const container = dom.createElement("div");
     container.classList.add("popup-content-div");
     container.appendChild(title);
     container.appendChild(message);
@@ -161,41 +162,41 @@ function getReplaceNameContent(presetName){
 }
 
 function getReplacePresetContent(presetName, secondReplaceAttempt = false){
-    const title = document.createElement("p");
+    const title = dom.createElement("p");
     title.textContent = "No space left save";
     title.classList.add("popup-title");
 
-    const message = document.createElement("p");
+    const message = dom.createElement("p");
     if(secondReplaceAttempt){
         message.append(
             "Still no space left to save the preset.",
-            document.createElement("br"),
+            dom.createElement("br"),
             "You can choose an existing preset to replace:"
         );
     }
     else{
         message.append(
             "No space left to save the preset.",
-            document.createElement("br"),
+            dom.createElement("br"),
             "You can choose an existing preset to replace:"
         );
     } 
 
     const presetNames = getCustomPresetNames();
 
-    const presetDropdown = document.createElement("select");
+    const presetDropdown = dom.createElement("select");
     presetDropdown.classList.add("preset-dropdown");
     for(const name of presetNames){
-        const option = document.createElement("option");
+        const option = dom.createElement("option");
         option.value = name;
         option.textContent = name;
         presetDropdown.appendChild(option);
     }
 
-    const buttonDiv = document.createElement("div");
+    const buttonDiv = dom.createElement("div");
     buttonDiv.classList.add("popup-button-div");
 
-    const replaceButton = document.createElement("button");
+    const replaceButton = dom.createElement("button");
     replaceButton.textContent = "Replace";
     replaceButton.classList.add("button");
     replaceButton.addEventListener("click", () => {
@@ -209,7 +210,7 @@ function getReplacePresetContent(presetName, secondReplaceAttempt = false){
         }
     });
 
-    const cancelButton = document.createElement("button");
+    const cancelButton = dom.createElement("button");
     cancelButton.textContent = "Cancel";
     cancelButton.classList.add("button");
     cancelButton.addEventListener("click", () => {
@@ -219,7 +220,7 @@ function getReplacePresetContent(presetName, secondReplaceAttempt = false){
     buttonDiv.appendChild(replaceButton);
     buttonDiv.appendChild(cancelButton);
 
-    const container = document.createElement("div");
+    const container = dom.createElement("div");
     container.classList.add("popup-content-div");
 
     container.appendChild(title);
@@ -231,7 +232,7 @@ function getReplacePresetContent(presetName, secondReplaceAttempt = false){
 }
 
 export function activateSaveButton(){
-    const saveButton = document.getElementById("savePreset");
+    const saveButton = dom.getElementById("savePreset");
     if (!isLocalStorageAvailable()) {
         saveButton.style.display = "none";
         return;
@@ -244,7 +245,7 @@ export function activateSaveButton(){
 }
 
 export function deactivateSaveButton(){
-    const saveButton = document.getElementById("savePreset");
+    const saveButton = dom.getElementById("savePreset");
     saveButton.disabled = true;
 }
 

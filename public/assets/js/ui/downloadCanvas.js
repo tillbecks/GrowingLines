@@ -1,11 +1,12 @@
 import { drawTreeNode } from "../canvas/canvasDrawing.js";
 import { DOWNLOADPADDING } from "../config/appConfig.js";
+import dom from "../state/domState.js";
 
 /**
  * Redraws the tree structures on a temporary canvas and triggers a download of the canvas content as an image file.
  * @param {*} structs 
  */
-export function redrawAndDownloadCanvasAsImage( structs){
+export function redrawAndDownloadCanvasAsImage(structs){
 
     // Calculate the boundaries of the tree to determine the size of the temporary canvas
     const boundaries = getTreeBoundaries(structs);
@@ -17,7 +18,7 @@ export function redrawAndDownloadCanvasAsImage( structs){
     const offsetY = -boundaries.minY + DOWNLOADPADDING;
     
     // Create a temporary canvas to draw the tree structures
-    const tempCanvas = document.createElement('canvas');
+    const tempCanvas = dom.createElement('canvas');
     tempCanvas.width = width;
     tempCanvas.height = height;
     const context = tempCanvas.getContext('2d');
@@ -45,13 +46,17 @@ export function redrawAndDownloadCanvasAsImage( structs){
     
     // toBlob is mobile friendly
     tempCanvas.toBlob(function(blob) {
+        if (!blob) {
+            console.error('Failed to create blob from canvas. Canvas might be too large.');
+            return;
+        }
         const url = URL.createObjectURL(blob);
-        const link = document.createElement('a');
+        const link = dom.createElement('a');
         link.href = url;
         link.download = filename;
-        document.body.appendChild(link);
+        dom.body.appendChild(link);
         link.click();
-        document.body.removeChild(link);
+        dom.body.removeChild(link);
         URL.revokeObjectURL(url);
     }, 'image/png');
 }
@@ -77,10 +82,12 @@ export function getTreeBoundaries(structs){
             };
         }, {minX: Infinity, minY: Infinity, maxX: -Infinity, maxY: -Infinity});
         
+        
         minX = Math.min(minX, boundaries.minX);
         minY = Math.min(minY, boundaries.minY);
         maxX = Math.max(maxX, boundaries.maxX);
         maxY = Math.max(maxY, boundaries.maxY);
     }
+    
     return {minX, minY, maxX, maxY};
 }

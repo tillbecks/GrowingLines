@@ -52,3 +52,7 @@ export const DOWNLOADPADDING = 20;
 
 export const CUSTOMNAME = "Custom";
 
+//Canvas insert config 
+export const CANVASSTANDWIDTH = 800;
+export const CANVASSTANDHEIGHT = 600;
+

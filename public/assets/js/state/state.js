@@ -1,9 +1,8 @@
 import * as POINTACTIONS from "../tree/joinStartPointActions.js";
 import * as TCPRESETS from "../config/treeConfigPresets.js";
-import * as AC from "../config/appConfig.js";
-import * as DRAWING from "../canvas/canvasDrawing.js";
 import * as UTILS from "../config/utils.js";
 import * as AGECOUNTER from "../ui/ageCounter.js";
+import dom from "./domState.js";
 
 //Central state management for the application, containing all relevant states and functions to manipulate them
 class State{
@@ -28,44 +27,8 @@ class State{
             joinPointMode: false,
             potentialJoinPoints: [],
         }
-        
-        this.dom = null;
-        this.initDom();
 
         this.treeConfig = structuredClone(TCPRESETS.treeConfigs[TCPRESETS.defaultTreeConfigIndex]);
-    }
-
-    initDom(){
-        const canvas = this.initCanvas();
-        this.dom = {
-            pureCanvas: canvas,
-            canvasContext: canvas.getContext("2d"),
-            canvas: new handwriting.Canvas(canvas, AC.USERSTROKEWIDTH),
-            backgroundCanvas: document.getElementById("backgroundCanvas"),
-            buttons: {
-                resetButton: document.getElementById("resetButton"),
-                growButton: document.getElementById("growButton"),
-                resetGrow: document.getElementById("resetGrow"),
-                stopGrow: document.getElementById("stopGrow"),
-                editMode: document.getElementById("editModeButton"),
-                startPoint: document.getElementById("startPointButton"),
-                joinPoint: document.getElementById("joinPointButton"),
-                download: document.getElementById("downloadButton"),
-                loadPreset: document.getElementById("loadPreset"),
-            },
-            editModeButtonsContainer: document.getElementById("editModeButtonsContainer"),
-        };
-    }
-
-    initCanvas(){
-        const canvas = document.getElementById("canvas");
-        //Set canvas drawing color and width
-        canvas.getContext("2d").strokeStyle = AC.USERSTROKECOLOR;
-        canvas.getContext("2d").lineWidth = AC.USERSTROKEWIDTH;
-        canvas.getContext("2d").globalAlpha = 1;
-        canvas.getContext("2d").globalCompositeOperation = "source-over";
-
-        return canvas;
     }
 
     /**
@@ -78,15 +41,18 @@ class State{
             this.reset("editMode");
             this.editModeState.editMode = true;
 
-            this.dom.pureCanvas.classList.add("not-allowed-cursor");
-            this.dom.buttons.editMode.value = "Exit Edit Mode"; 
+            dom.pureCanvas.classList.add("not-allowed-cursor");
+            dom.buttons.editMode.value = "Exit Edit Mode"; 
 
             //Deactivate canvas drawing and interactions
-            this.dom.canvas.deactivate();
+            dom.canvas.deactivate();
 
-            this.dom.buttons.download.disabled = true;
+            dom.buttons.download.disabled = true;
             AGECOUNTER.hideAgeCounter();
-            
+
+            ////Check if existing start points and join points are still valid after potential setting changes (e.g. branch length) and clean up if necessary
+            this.cleanUpStartAndJoinPoints();
+            this.checkStrokeStart();               
         }
         else{
             this.editModeState.editMode = false;
@@ -94,15 +60,15 @@ class State{
             this.editModeState.joinPointMode = false;
             this.editModeState.potentialJoinPoints = [];
 
-            this.dom.pureCanvas.classList.remove("not-allowed-cursor");
-            this.dom.buttons.editMode.value = "Edit Mode"; 
+            dom.pureCanvas.classList.remove("not-allowed-cursor");
+            dom.buttons.editMode.value = "Edit Mode"; 
     
-            this.dom.canvas.activate();
+            dom.canvas.activate();
 
-            this.dom.buttons.download.disabled = false;
+            dom.buttons.download.disabled = false;
             AGECOUNTER.reviveAgeCounter();
         }
-        this.updateStyleModeButtons();
+        dom.updateStyleModeButtons(this.editModeState.editMode, this.editModeState.startPointMode, this.editModeState.joinPointMode);
     }
 
     /**
@@ -111,7 +77,7 @@ class State{
      */
     setPlay(value=!this.growState.play){
         this.growState.play = value;
-        this.dom.buttons.stopGrow.value = !this.growState.play ? "\u25B6" : "\u23F8";
+        dom.updatePlayButton(this.growState.play);
     }
 
     /**
@@ -128,7 +94,7 @@ class State{
             this.editModeState.startPointMode = false;
         }
     
-        this.updateStyleModeButtons();
+        dom.updateStyleModeButtons(this.editModeState.editMode, this.editModeState.startPointMode, this.editModeState.joinPointMode);
     }
     
     /**
@@ -145,17 +111,9 @@ class State{
             this.editModeState.joinPointMode = false;
         }
         
-        this.updateStyleModeButtons();
+        dom.updateStyleModeButtons(this.editModeState.editMode, this.editModeState.startPointMode, this.editModeState.joinPointMode);
     }
     
-    /**
-     * Updates the styling of the edit mode buttons based on the current state of edit mode, start point mode, and join point mode. 
-     */
-    updateStyleModeButtons(){
-        this.dom.editModeButtonsContainer.classList.toggle("editModeActive", this.editModeState.editMode);
-        this.dom.editModeButtonsContainer.classList.toggle("startMode", this.editModeState.startPointMode);
-        this.dom.editModeButtonsContainer.classList.toggle("joinMode", this.editModeState.joinPointMode);
-    }
 
     /**
      * Cleans up the stroke starts and join points to ensure they are consistent with the current strokes, especially after changes in branch length that may affect the validity of existing start and join points. 
@@ -163,7 +121,7 @@ class State{
     cleanUpStartAndJoinPoints(){
         const oldStrokes = this.strokeState.strokes;
 
-        this.strokeState.strokes = UTILS.strokePreprocessing(this.dom.canvas.getTrace(), this.treeConfig.sproutingLength);
+        this.strokeState.strokes = UTILS.strokePreprocessing(dom.canvas.getTrace(), this.treeConfig.sproutingLength);
         this.strokeState.strokeStarts = POINTACTIONS.mapStartPointsNewLength(oldStrokes, this.strokeState.strokes, this.strokeState.strokeStarts);
         this.strokeState.strokeStartsCache = POINTACTIONS.mapStartPointsNewLength(oldStrokes, this.strokeState.strokes, this.strokeState.strokeStartsCache);
 
@@ -218,18 +176,9 @@ class State{
                 //thisJoinPoint: null,
                 //thisStartPoint: null,
             }
-            resetForegroundCanvas();
-            resetBackgroundCanvas();
+            dom.resetForegroundCanvas();
+            dom.resetBackgroundCanvas();
         };
-
-        const resetBackgroundCanvas = () => {
-            DRAWING.clearCanvas(this.dom.backgroundCanvas.getContext("2d"), AC.SECONDARYCOLOR);
-        }
-
-        const resetForegroundCanvas = () => {
-            this.dom.canvas.erase();
-            DRAWING.clearCanvas(this.dom.pureCanvas.getContext("2d"), AC.PRIMARYCOLOR);
-        }
     
         const resets = {
             "all": () => {
@@ -241,10 +190,10 @@ class State{
             },
             "grow": () => {
                 this.strokeState.structs = [];
-                resetBackgroundCanvas();
+                dom.resetBackgroundCanvas();
             },
             "editMode": () => {
-                resetBackgroundCanvas();
+                dom.resetBackgroundCanvas();
             }
         };
     
@@ -256,9 +205,11 @@ class State{
      * @param {*} trace - The trace to insert.
      * @param {*} strokeState - The stroke state to associate with the trace.
      */
-    insertTraceAndStrokeState(trace, strokeState){
-        this.dom.canvas.injectTrace(trace, false);
-        this.strokeState = strokeState;
+    insertTraceAndStrokeState(trace, strokeState=null){
+        dom.canvas.injectTrace(trace);
+        if(strokeState){
+            this.strokeState = strokeState;
+        }
     }
     
 }

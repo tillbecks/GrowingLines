@@ -1,4 +1,5 @@
 import {IMAGEPOSITION, INFORMATIONCONTENT } from "../config/infoContentConfig.js";
+import dom from "../state/domState.js";
 
 /**
  * Binds an object to the info box for displaying information.
@@ -6,7 +7,7 @@ import {IMAGEPOSITION, INFORMATIONCONTENT } from "../config/infoContentConfig.js
  * @param {*} contentObjectKey 
  */
 export function bindObjectToInfoBox(objectId, contentObjectKey){
-    const element = document.getElementById(objectId);
+    const element = dom.getElementById(objectId);
     if(INFORMATIONCONTENT[contentObjectKey]){
         element.addEventListener("click", () => {
             setInfoBoxContent(INFORMATIONCONTENT[contentObjectKey]);
@@ -15,10 +16,10 @@ export function bindObjectToInfoBox(objectId, contentObjectKey){
 }
 
 function setInfoBoxContent(contentObject){
-    const infoBox = document.getElementById("infoBox");
-    const title = document.getElementById("infoBoxTitle");
-    const text = document.getElementById("infoBoxText");
-    const imageContainer = document.getElementById("infoBoxImageContainer");
+    const infoBox = dom.getElementById("infoBox");
+    const title = dom.getElementById("infoBoxTitle");
+    const text = dom.getElementById("infoBoxText");
+    const imageContainer = dom.getElementById("infoBoxImageContainer");
 
     title.textContent = contentObject.title;
     text.textContent = contentObject.text;
@@ -54,32 +55,28 @@ function createImageDescription(src, alt="", description){
     return container;
 }
 
-const infoSection = document.getElementById("infoSection");
-const infoBoxHideButton = document.getElementById("infoBoxHideButton");
-const infoBoxContainer = document.querySelector(".info-box-container");
-
 /**
  * Sets the dimension of the info box container, so it can contain the absolute positioned hide button when the info box is collapsed.
  */
 function updateButtonDimensions(){
-    const width = infoBoxHideButton.offsetWidth;
-    const height = infoBoxHideButton.offsetHeight;
-    infoBoxContainer.style.setProperty('--info-box-button-width', `${width}px`);
-    infoBoxContainer.style.setProperty('--info-box-button-height', `${height}px`);
+    const width = dom.buttons.infoBoxHideButton.offsetWidth;
+    const height = dom.buttons.infoBoxHideButton.offsetHeight;
+    dom.infoBoxContainer.style.setProperty('--info-box-button-width', `${width}px`);
+    dom.infoBoxContainer.style.setProperty('--info-box-button-height', `${height}px`);
 }
 
 function toggleInfoBox(show = null){
-    if(show == true || infoSection.classList.contains("collapsed")){
-        infoSection.classList.remove("collapsed");
-        infoBoxHideButton.value = "Hide Info Box";
+    if(show == true || dom.infoSection.classList.contains("collapsed")){
+        dom.infoSection.classList.remove("collapsed");
+        dom.buttons.infoBoxHideButton.value = "Hide Info Box";
     } else {
-        infoSection.classList.add("collapsed");
-        infoBoxHideButton.value = "Show Info Box";
+        dom.infoSection.classList.add("collapsed");
+        dom.buttons.infoBoxHideButton.value = "Show Info Box";
         updateButtonDimensions();
     }
 }
 
-document.getElementById("infoBoxHideButton").addEventListener("click", toggleInfoBox);
+dom.buttons.infoBoxHideButton.addEventListener("click", toggleInfoBox);
 
 // Beim initialen Laden die Größe setzen
 window.addEventListener("DOMContentLoaded", updateButtonDimensions);

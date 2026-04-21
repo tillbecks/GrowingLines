@@ -1,14 +1,13 @@
-export function setPopupContent(content){
-    const popup = document.getElementById("popup");
-    const popupContent = document.getElementById("popupContent");
+import dom from "../state/domState.js";
 
-    while(popupContent.firstChild){
-        popupContent.removeChild(popupContent.firstChild);
+export function setPopupContent(content){
+    while(dom.popupContent.firstChild){
+        dom.popupContent.removeChild(dom.popupContent.firstChild);
     }
 
-    popupContent.appendChild(content);
+    dom.popupContent.appendChild(content);
 
-    popup.classList.toggle("active", true);
+    dom.popup.classList.toggle("active", true);
 }
 
 export function hidePopup(){

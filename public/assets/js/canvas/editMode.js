@@ -1,38 +1,9 @@
 import * as JSPA from "../tree/joinStartPointActions.js";
 import * as CANVASDRAWING from "./canvasDrawing.js";
 import * as UTILS from "../config/utils.js";
-import * as GROWING from "../tree/growing.js";
+import dom from "../state/domState.js";
 import { MINIMUMDISTANCEMOUSETOPOINT } from "../config/appConfig.js";
 
-/**
- * Handles the enabling and disabling of edit mode, as well as the visualization and interaction of start and join point placement
- * @param {Object} state 
- * @returns {void}
- */
-export async function setEditMode(state){
-    //Activation of edit mode
-    if(!state.editModeState.editMode){
-        await GROWING.abordGrowing(state);
-        
-        //Update associated states and UI elements 
-        state.setEditMode(true);
-
-        //Check if existing start points and join points are still valid after potential setting changes (e.g. branch length) and clean up if necessary
-        state.cleanUpStartAndJoinPoints();
-        state.checkStrokeStart();    
-
-        //Draw edit mode visualization
-        CANVASDRAWING.drawEditMode(state.dom.canvasContext, state.strokeState.strokes, state.strokeState.strokeStarts, state.strokeState.joinPoints, state.dom.canvas.trace);
-
-    }
-    else{
-        //Update associated state and UI elements
-        state.setEditMode(false);
-
-        //Redraw canvas with current strokes and structs
-        CANVASDRAWING.drawStructs(state.dom.canvas.trace, state.strokeState.structs, state.dom.pureCanvas, state.dom.backgroundCanvas);
-    }
-}
 
 /**
  * Handles mouse move events in edit mode
@@ -76,7 +47,7 @@ function getStartPointAtPosition(position, state){
  * @returns 
  */
 function getJoinPointAtPosition(position, state){
-    for(let joinPoint of state.editModeState.potentialJoinPoints){
+    for(let joinPoint of state.strokeState.potentialJoinPoints){
         if(UTILS.calcDistance(joinPoint.intersection, position) < MINIMUMDISTANCEMOUSETOPOINT){
             return joinPoint;
         }
@@ -90,10 +61,10 @@ function getJoinPointAtPosition(position, state){
  * @param {*} state 
  */
 function mouseMoveStartPoint(event, state){
-    if(state.editModeState.startPointMode && state.dom.pureCanvas.matches(':hover')){
+    if(state.editModeState.startPointMode && dom.pureCanvas.matches(':hover')){
         const clickedPoint = getStartPointAtPosition([event.offsetX, event.offsetY], state);
         state.editModeState.thisStartPoint = clickedPoint;
-        state.dom.pureCanvas.classList.toggle("not-allowed-cursor", !clickedPoint);
+        dom.pureCanvas.classList.toggle("not-allowed-cursor", !clickedPoint);
     }
 }
 
@@ -103,10 +74,10 @@ function mouseMoveStartPoint(event, state){
  * @param {*} state 
  */
 function mouseMoveJoinPoint(event, state){
-    if(state.editModeState.joinPointMode && state.dom.pureCanvas.matches(':hover')){
+    if(state.editModeState.joinPointMode && dom.pureCanvas.matches(':hover')){
         const clickedJoinPoint = getJoinPointAtPosition([event.offsetX, event.offsetY], state);
         state.editModeState.thisJoinPoint = clickedJoinPoint;
-        state.dom.pureCanvas.classList.toggle("not-allowed-cursor", !clickedJoinPoint);
+        dom.pureCanvas.classList.toggle("not-allowed-cursor", !clickedJoinPoint);
     }
 }
 
@@ -137,7 +108,7 @@ function mouseDownStartPoint(event, state){
         if(clickedPoint){
             //Add start point to the clicked stroke and redraw edit mode visualization
             JSPA.addStartPoint(state.strokeState.joinPoints, state.strokeState.strokeStarts, state.strokeState.strokeStartsCache, clickedPoint.pointIndex, clickedPoint.strokeIndex);
-            CANVASDRAWING.drawEditMode(state.dom.canvasContext, state.strokeState.strokes, state.strokeState.strokeStarts, state.strokeState.joinPoints, state.dom.canvas.trace);
+            CANVASDRAWING.drawEditMode(dom.canvasContext, state.strokeState.strokes, state.strokeState.strokeStarts, state.strokeState.joinPoints, dom.canvas.trace);
         }
     }
 }
@@ -163,7 +134,7 @@ function mouseDownJoinPoint(event, state){
                 //After removing a join point, some strokes may not have start points as multiple strokes share a start point when joined. Therefore we need to check if all strokes have valid start points
                 state.checkStrokeStart();
             }
-            CANVASDRAWING.drawEditMode(state.dom.canvasContext, state.strokeState.strokes, state.strokeState.strokeStarts, state.strokeState.joinPoints, state.dom.canvas.trace);
+            CANVASDRAWING.drawEditMode(dom.canvasContext, state.strokeState.strokes, state.strokeState.strokeStarts, state.strokeState.joinPoints, dom.canvas.trace);
         }
     }
 }

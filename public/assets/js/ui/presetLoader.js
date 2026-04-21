@@ -3,42 +3,66 @@ import * as sliderUpdates from "./sliderUpdates.js";
 import { activateSaveButton, deactivateSaveButton } from "./presetPopup.js";
 import { CUSTOMNAME } from "../config/appConfig.js";
 import * as PSTORAGE from "../config/customPresetStorage.js";
+import dom from "../state/domState.js";
 
-const presetSelector = document.getElementById("presetSelector");
+//The presets are devided into default presets, which are defined in the TCPRESETS file, and custom presets, which can be created by the user and are stored in the local storage. 
 let lastPresetIndex = -1;
 let customPresetList = [];
 
+/**
+ * Configures the preset selector with default options and custom presets.
+ */
 export function configurePresetSelector(){
     reloadPresetSelector();
     
-    presetSelector.value = TCPRESETS.defaultTreeConfigIndex;
+    dom.presetSelector.value = TCPRESETS.defaultTreeConfigIndex;
 }
 
+/**
+ * Reloads the preset selector options, including default and custom presets.
+ */
 export function reloadPresetSelector(){
-    while(presetSelector.firstChild){
-        presetSelector.removeChild(presetSelector.firstChild);
+    while(dom.presetSelector.firstChild){
+        dom.presetSelector.removeChild(dom.presetSelector.firstChild);
     }
 
-    const customOption = document.createElement("option");
+    const customOption = dom.createElement("option");
     customOption.value = CUSTOMNAME;
     customOption.textContent = CUSTOMNAME;
-    presetSelector.appendChild(customOption);
+    dom.presetSelector.appendChild(customOption);
     
+    //Create options for default presets
     for (let i = 0; i < TCPRESETS.treeConfigs.length; i++) {
-        const option = document.createElement("option");
+        const option = dom.createElement("option");
         option.value = i;
         option.textContent = TCPRESETS.treeConfigs[i].name;
-        presetSelector.appendChild(option);
+        dom.presetSelector.appendChild(option);
     }
 
     loadCustomPresets();
     
     // Use change event instead of click for better mobile compatibility
-    presetSelector.addEventListener("change", () => {
-        handlePresetChange(presetSelector.value);
+    dom.presetSelector.addEventListener("change", () => {
+        handlePresetChange(dom.presetSelector.value);
     });
 }
 
+//Loads custom presets from local storage and adds them to the preset selector.
+function loadCustomPresets(){
+    customPresetList = PSTORAGE.getCustomPresetNames();
+    for(let i = 0; i < customPresetList.length; i++){
+        const name = customPresetList[i];
+        const option = dom.createElement("option");
+        option.value = i + TCPRESETS.treeConfigs.length; // Custom presets start after default presets
+        option.textContent = name;
+        dom.presetSelector.appendChild(option);
+    }
+}
+
+/**
+ * Handles changes in the preset selector, loading the selected preset or activating custom mode.
+ * @param {string} value 
+ */
 function handlePresetChange(value) {
     if (value === CUSTOMNAME) {
         setCustomValue();
@@ -47,30 +71,21 @@ function handlePresetChange(value) {
     }
 }
 
-function loadCustomPresets(){
-    customPresetList = PSTORAGE.getCustomPresetNames();
-    for(let i = 0; i < customPresetList.length; i++){
-        const name = customPresetList[i];
-        const option = document.createElement("option");
-        option.value = i + TCPRESETS.treeConfigs.length; // Custom presets start after default presets
-        option.textContent = name;
-        presetSelector.appendChild(option);
-    }
-}
-
+/**
+ * Loads a preset based on its index.
+ * @param {number} presetIndex 
+ */
 function loadPreset(presetIndex){
     if(presetIndex != lastPresetIndex){
+        //Variable to avoid multiple loading
         lastPresetIndex = presetIndex;
+        //If the preset index is out of bounds, we set it to custom value
         if(presetIndex < 0 || presetIndex >= TCPRESETS.treeConfigs.length + customPresetList.length){
             setCustomValue();
-        }else if(presetIndex >= TCPRESETS.treeConfigs.length){
-            let config = PSTORAGE.loadCustomPreset(customPresetList[presetIndex - TCPRESETS.treeConfigs.length]);
-            // Slider synchronization -> triggers state update automatically
-            sliderUpdates.updateSlidersFromConfig(config);
-            deactivateSaveButton();
         }
         else{
-            let config = TCPRESETS.treeConfigs[presetIndex];
+            //Either load presets from TCPRESETS or from local storage, depending on the index
+            let config = presetIndex >= TCPRESETS.treeConfigs.length ? PSTORAGE.loadCustomPreset(customPresetList[presetIndex - TCPRESETS.treeConfigs.length]) : TCPRESETS.treeConfigs[presetIndex];
             
             sliderUpdates.updateSlidersFromConfig(config);
             deactivateSaveButton();
@@ -80,12 +95,15 @@ function loadPreset(presetIndex){
 
 export function setLatestValue(){
     const lastIndex = TCPRESETS.treeConfigs.length + customPresetList.length - 1;
-    presetSelector.value = lastIndex;
+    dom.presetSelector.value = lastIndex;
     handlePresetChange(lastIndex);
 }
 
+/**
+ * Sets the preset selector to the custom value and activates the save button for saving a new custom preset.
+ */
 export function setCustomValue(){
-    presetSelector.value = CUSTOMNAME;
+    dom.presetSelector.value = CUSTOMNAME;
     activateSaveButton();
 }
 
