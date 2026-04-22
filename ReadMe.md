@@ -1,4 +1,4 @@
-![GrowLogoBackground](https://github.com/tillbecks/Grow/edit/main/.github/assets/GrowLogoBackground.png)
+![GrowLogoBackground](https://github.com/tillbecks/Grow/main/.github/assets/GrowLogoBackground.png)
 
 # The GROW-Project
 
