@@ -9,7 +9,7 @@ class domState{
 
         this.pureCanvas = canvas;
         this.canvasContext = canvas.getContext("2d");
-        this.canvas = new handwriting.Canvas(canvas, AC.USERSTROKEWIDTH);
+        this.canvas = new window.handwriting.Canvas(canvas, AC.USERSTROKEWIDTH);
         this.backgroundCanvas = document.getElementById("backgroundCanvas");
         this.backgroundCanvasContext = this.backgroundCanvas.getContext("2d");
         this.buttons = {
